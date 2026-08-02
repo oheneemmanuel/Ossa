@@ -1,0 +1,11 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" rx="36" fill="#0B4F6C"/>
+  <rect x="80" y="90" width="1040" height="720" rx="28" fill="#F7F5EF"/>
+  <circle cx="430" cy="365" r="190" fill="#F26419"/>
+  <path d="M430 215C478 215 518 255 518 303C518 351 478 391 430 391C382 391 342 351 342 303C342 255 382 215 430 215Z" fill="#F7F5EF"/>
+  <path d="M390 505C415 456 446 423 487 403C524 385 553 375 590 372V624H390V505Z" fill="#0B4F6C"/>
+  <rect x="630" y="245" width="260" height="180" rx="20" fill="#F2C14E"/>
+  <rect x="650" y="470" width="220" height="110" rx="18" fill="#0B4F6C"/>
+  <path d="M760 220L815 320H705L760 220Z" fill="#F26419"/>
+  <text x="120" y="760" fill="#0B4F6C" font-family="Arial, sans-serif" font-size="42" font-weight="700">OSSA Science Community</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" rx="32" fill="#F2C14E"/>
+  <rect x="90" y="90" width="1020" height="620" rx="24" fill="#F7F5EF"/>
+  <rect x="180" y="190" width="360" height="280" rx="20" fill="#0B4F6C"/>
+  <rect x="590" y="220" width="320" height="220" rx="20" fill="#F26419"/>
+  <rect x="260" y="520" width="550" height="80" rx="16" fill="#0B4F6C"/>
+  <text x="200" y="680" fill="#0B4F6C" font-family="Arial, sans-serif" font-size="38" font-weight="700">Committee Celebration</text>
+</svg>

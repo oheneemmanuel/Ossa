@@ -1,0 +1,8 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" rx="32" fill="#0B4F6C"/>
+  <rect x="80" y="90" width="1040" height="620" rx="24" fill="#F7F5EF"/>
+  <circle cx="410" cy="330" r="160" fill="#F26419"/>
+  <rect x="640" y="220" width="270" height="180" rx="18" fill="#0B4F6C"/>
+  <rect x="640" y="430" width="220" height="120" rx="18" fill="#F2C14E"/>
+  <text x="120" y="680" fill="#0B4F6C" font-family="Arial, sans-serif" font-size="44" font-weight="700">OSSA School Visit</text>
+</svg>

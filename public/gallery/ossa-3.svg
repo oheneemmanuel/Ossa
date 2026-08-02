@@ -1,0 +1,8 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" rx="32" fill="#0B4F6C"/>
+  <rect x="120" y="100" width="960" height="600" rx="24" fill="#F7F5EF"/>
+  <circle cx="430" cy="330" r="140" fill="#F2C14E"/>
+  <rect x="650" y="210" width="220" height="220" rx="20" fill="#F26419"/>
+  <rect x="240" y="500" width="560" height="80" rx="14" fill="#0B4F6C"/>
+  <text x="180" y="680" fill="#0B4F6C" font-family="Arial, sans-serif" font-size="38" font-weight="700">Community Outreach</text>
+</svg>
