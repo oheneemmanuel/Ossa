@@ -2,7 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+
 import { Eye, EyeOff, Lock, User, ArrowRight } from "lucide-react";
+
+import { useToast } from "@/components/providers/ToastProvider";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,8 +17,10 @@ export default function LoginForm() {
     password: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
+  const { showToast } = useToast();
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMessage("");
 
@@ -24,11 +31,27 @@ export default function LoginForm() {
 
     setLoading(true);
 
-    // Simulated API authentication call
-    setTimeout(() => {
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: formData.email,
+        password: formData.password,
+      });
+
       setLoading(false);
-      console.log("Login submitted:", formData);
-    }, 1200);
+
+      if (result?.error) {
+        setErrorMessage("Login failed. Please try again.");
+        showToast("Login failed. Please try again.", "error");
+        return;
+      }
+
+      router.push("/dashboard");
+    } catch (error) {
+      setLoading(false);
+      setErrorMessage("Login failed. Please try again.");
+      console.error("Login error:", error);
+    }
   };
 
   return (

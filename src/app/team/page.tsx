@@ -14,13 +14,13 @@ const members = [
   },
   {
     role: "Secretary",
-    name: "K. Asare",
-    image: "/team/secretary.svg",
+    name: "Mr. Dennis K. Lartey",
+    image: "/team/dennis.jpg",
   },
   {
     role: "Programs Lead",
-    name: "R. Mensah",
-    image: "/team/programs-lead.svg",
+    name: "Patric N. Gyamfi",
+    image: "/team/dangote.jpg",
   },
 ];
 
@@ -39,27 +39,26 @@ export default function TeamPage() {
           coordinate events, and keep OSSA active and welcoming.
         </p>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
           {members.map((member) => (
             <div
               key={member.role}
-              className="overflow-hidden rounded-[20px] border border-slate-200 bg-slate-50"
+              className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50"
             >
-              <div className="relative mx-3 mt-3 aspect-[4/5] overflow-hidden rounded-[16px] bg-slate-100 sm:mx-4 sm:mt-4">
+              <div className="relative mx-2.5 mt-2.5 aspect-square overflow-hidden rounded-xl bg-slate-100 sm:mx-3 sm:mt-3">
                 <Image
                   src={member.image}
                   alt={`${member.role} portrait`}
                   fill
-                  className="object-cover scale-[0.96]"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  priority
+                  className="object-cover"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 />
               </div>
-              <div className="p-4 sm:p-5">
-                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#0b4f6c]">
+              <div className="p-3 sm:p-3.5">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#0b4f6c] sm:text-xs">
                   {member.role}
                 </p>
-                <p className="mt-2 text-lg font-medium text-slate-900">
+                <p className="mt-1 text-sm font-medium leading-snug text-slate-900 sm:text-base">
                   {member.name}
                 </p>
               </div>

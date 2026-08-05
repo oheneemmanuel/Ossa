@@ -1,7 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { createUserAccount } from "@/lib/actions/auth";
+import { useRouter } from "next/navigation";
+
 import Link from "next/link";
+import { useToast } from "@/components/providers/ToastProvider";
+
 import {
   User,
   Mail,
@@ -16,8 +21,11 @@ import {
 
 export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const { showToast } = useToast();
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -25,7 +33,6 @@ export default function RegisterForm() {
     email: "",
     phone: "",
     gender: "male",
-    department: "",
     yearCompleted: "",
     location: "",
     password: "",
@@ -41,25 +48,54 @@ export default function RegisterForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
+    setSuccessMessage("");
 
-    // Basic Validations
+    // Basic client-side validation (mirrors server rules)
     if (formData.password !== formData.confirmPassword) {
       setErrorMessage("Passwords do not match.");
       return;
     }
 
-    if (formData.password.length < 6) {
-      setErrorMessage("Password must be at least 6 characters long.");
+    if (formData.password.length < 8) {
+      setErrorMessage("Password must be at least 8 characters long.");
       return;
     }
 
-    setLoading(true);
+    startTransition(async () => {
+      const fd = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        fd.append(key, value);
+      });
 
-    // Simulated API submission
-    setTimeout(() => {
-      setLoading(false);
-      console.log("Registration payload:", formData);
-    }, 1500);
+      const result = await createUserAccount(fd);
+
+      if (!result.success) {
+        setErrorMessage(result.error ?? "Something went wrong.");
+        showToast(result.error ?? "Something went wrong.", "error");
+        return;
+      }
+
+      setSuccessMessage(result.message ?? "Account created successfully.");
+      showToast(result.message ?? "Account created successfully.", "success");
+
+      // Redirect to login page on success
+      router.push('/login');
+
+      // Reset form on success
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        gender: "male",
+        yearCompleted: "",
+        location: "",
+        password: "",
+        confirmPassword: "",
+      });
+
+      
+    });
   };
 
   return (
@@ -80,6 +116,12 @@ export default function RegisterForm() {
       {errorMessage && (
         <div className="mb-6 rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm font-medium text-rose-700">
           ⚠️ {errorMessage}
+        </div>
+      )}
+
+      {successMessage && (
+        <div className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-medium text-emerald-700">
+          ✅ {successMessage}
         </div>
       )}
 
@@ -229,7 +271,7 @@ export default function RegisterForm() {
           </div>
         </div>
 
-        {/* LOCATION & DEPARTMENT */}
+        {/* LOCATION */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label
@@ -254,8 +296,6 @@ export default function RegisterForm() {
               />
             </div>
           </div>
-
-          
         </div>
 
         {/* PASSWORD & CONFIRM PASSWORD */}
@@ -276,6 +316,7 @@ export default function RegisterForm() {
                 name="password"
                 type={showPassword ? "text" : "password"}
                 required
+                minLength={8}
                 placeholder="••••••••"
                 value={formData.password}
                 onChange={handleChange}
@@ -307,6 +348,7 @@ export default function RegisterForm() {
               name="confirmPassword"
               type={showPassword ? "text" : "password"}
               required
+              minLength={8}
               placeholder="••••••••"
               value={formData.confirmPassword}
               onChange={handleChange}
@@ -319,10 +361,10 @@ export default function RegisterForm() {
         <div className="pt-2">
           <button
             type="submit"
-            disabled={loading}
+            disabled={isPending}
             className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition-all hover:bg-blue-700 disabled:opacity-60"
           >
-            {loading ? (
+            {isPending ? (
               <span>Creating Account...</span>
             ) : (
               <>

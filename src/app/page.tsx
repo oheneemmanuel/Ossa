@@ -77,10 +77,10 @@ export default function Home() {
               </Link>
 
               <Link
-                href="/register"
+                href="/dashboard"
                 className="bg-white text-slate-950 px-6 py-3 border-2 border-slate-950 rounded-xl font-bold tracking-wide shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all text-center"
               >
-                Join the Community
+                Go to Dashboard
               </Link>
             </div>
           </Reveal>

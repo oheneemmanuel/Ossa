@@ -3,10 +3,10 @@ import { Aladin, Quicksand, Roboto } from "next/font/google";
 
 import "./globals.css";
 
-import Header from "@/components/ui/Header";
-import Footer from "@/components/ui/Footer";
-
 import { ToastProvider } from "@/components/providers/ToastProvider";
+import AppShell from "@/components/ui/AppShell";
+
+import Providers from "./providers";
 
 const aladin = Aladin({
   subsets: ["latin"],
@@ -56,12 +56,11 @@ export default function RootLayout({
     >
       <body suppressHydrationWarning className="flex min-h-screen flex-col bg-[#DCDCDC] text-[#000000]">
         <ToastProvider>
-          
-          <Header />
-
-          <main className="flex-1">{children}</main>
-
-          <Footer />
+          <AppShell>
+            <Providers>
+              {children}
+            </Providers>
+          </AppShell>
         </ToastProvider>
       </body>
     </html>

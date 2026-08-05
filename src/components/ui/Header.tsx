@@ -3,7 +3,7 @@ import { GraduationCap } from "lucide-react";
 import MobileMenu from "@/components/ui/MobileMenu";
 import DesktopNav from "@/components/ui/DesktopNav";
 
-export default async function Header() {
+export default function Header() {
   const desktopNavLinks = [
     { name: "Home", href: "/" },
 
