@@ -33,7 +33,8 @@ export default function PaystackButton({ email, amount, onSuccess }: PaystackBut
     setLoading(true);
 
     const handler = window.PaystackPop.setup({
-      key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
+      key: process.env.
+      NEXT_PUBLIC_KEY,
       email,
       amount: amount * 100,
       currency: "GHS",
