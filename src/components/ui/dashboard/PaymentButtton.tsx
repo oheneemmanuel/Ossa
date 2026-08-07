@@ -74,7 +74,7 @@ export default function PaystackButton({ email, amount, onSuccess }: PaystackBut
       <button
         onClick={payWithPaystack}
         disabled={loading || !amount}
-        className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#111C3A] px-4 py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-[#B8935A] disabled:cursor-not-allowed disabled:bg-[#111C3A]/20 disabled:text-[#111C3A]/40"
+        className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-[#B8935A] disabled:cursor-not-allowed disabled:bg-[#111C3A]/20 disabled:text-[#111C3A]/40"
       >
         {loading ? (
           <>

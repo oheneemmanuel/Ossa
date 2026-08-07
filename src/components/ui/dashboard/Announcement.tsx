@@ -70,7 +70,7 @@ export default function AnnouncementBell({ announcements = defaultAnnouncements 
 
         {/* Unread Badge Indicator */}
         {unreadCount > 0 && (
-          <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white ring-2 ring-white dark:ring-gray-900">
+          <span className="absolute top-1 right-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white ring-2 ring-white dark:ring-gray-900">
             {unreadCount > 9 ? '9+' : unreadCount}
           </span>
         )}
@@ -85,7 +85,7 @@ export default function AnnouncementBell({ announcements = defaultAnnouncements 
             onClick={() => setIsOpen(false)}
           />
 
-          <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-lg z-40 overflow-hidden">
+          <div className="absolute right-3 mt-2 w-80 sm:w-96 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-lg z-40 overflow-hidden">
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50">
               <div className="flex items-center gap-2">

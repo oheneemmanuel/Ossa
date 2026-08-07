@@ -19,9 +19,9 @@ import {
 const links = [
   { name: "Home", href: "/", icon: House },
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Finance", href: "/finance", icon: PiggyBank },
-  { name: "Settings", href: "/settings", icon: Settings },
-  { name: "Team", href: "/team", icon: Users },
+  { name: "Finance", href: "/dashboard/finance", icon: PiggyBank },
+  { name: "Settings", href: "/dashboard/settings", icon: Settings },
+  { name: "Team", href: "/dashboard/team", icon: Users },
 ];
 
 const accountLinks = [
@@ -32,18 +32,28 @@ const accountLinks = [
 export default function SideNav() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { data: session, status } = useSession();
 
+  // Track hydration completion to avoid SSR/Client class mismatches
   useEffect(() => {
+    setMounted(true);
+
     const updateSidebarState = () => {
-      setIsOpen(window.innerWidth >= 768);
+      if (window.innerWidth >= 768) {
+        setIsOpen(false); // Mobile drawer doesn't need to stay open on desktop breakpoints
+      }
     };
 
-    updateSidebarState();
     window.addEventListener("resize", updateSidebarState);
-
     return () => window.removeEventListener("resize", updateSidebarState);
   }, []);
+
+  const handleLinkClick = () => {
+    if (typeof window !== "undefined" && window.innerWidth < 768) {
+      setIsOpen(false);
+    }
+  };
 
   const firstName = session?.user?.firstName ?? "";
   const lastName = session?.user?.lastName ?? "";
@@ -54,7 +64,7 @@ export default function SideNav() {
 
   return (
     <>
-      {/* MOBILE TOP BAR — replaces the floating button */}
+      {/* MOBILE TOP BAR */}
       <div className="fixed inset-x-0 top-0 z-30 flex h-14 items-center justify-between border-b border-gray-200 bg-white px-4 shadow-sm md:hidden">
         <h1 className="text-base font-semibold text-gray-900">OSSA</h1>
         <button
@@ -70,7 +80,7 @@ export default function SideNav() {
       {/* SIDEBAR */}
       <div
         className={`fixed inset-y-0 left-0 z-20 flex w-72 max-w-[85vw] flex-col overflow-y-auto border-r border-gray-200 bg-white shadow-lg transition-transform duration-300 ease-in-out md:static md:w-64 md:max-w-none md:translate-x-0 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
+          isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         }`}
       >
         <div className="flex h-14 items-center justify-center border-b border-gray-200 md:h-16">
@@ -80,18 +90,19 @@ export default function SideNav() {
         <div className="flex flex-1 flex-col justify-between px-3 py-4">
           <nav className="flex flex-col gap-1">
             {links.map((link) => {
-              const isActive = pathname === link.href;
+              // Ensure active state only evaluates post-hydration on client
+              const isActive = mounted && pathname === link.href;
 
               return (
                 <Link
                   key={link.href}
                   href={link.href}
+                  onClick={handleLinkClick}
                   className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition ${
                     isActive
                       ? "bg-gray-900 text-white"
                       : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                   }`}
-                  onClick={() => setIsOpen(window.innerWidth >= 768)}
                 >
                   <link.icon
                     className={`h-5 w-5 shrink-0 ${
@@ -123,18 +134,18 @@ export default function SideNav() {
 
             <nav className="flex flex-col gap-1">
               {accountLinks.map((link) => {
-                const isActive = pathname === link.href;
+                const isActive = mounted && pathname === link.href;
 
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
+                    onClick={handleLinkClick}
                     className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition ${
                       isActive
                         ? "bg-gray-900 text-white"
                         : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                     }`}
-                    onClick={() => setIsOpen(window.innerWidth >= 768)}
                   >
                     <link.icon
                       className={`h-5 w-5 shrink-0 ${

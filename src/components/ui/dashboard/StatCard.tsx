@@ -3,7 +3,6 @@ import { PiggyBank, ArrowUpRight } from "lucide-react";
 interface ContributionCardProps {
   memberName?: string;
   amountContributed: number;
-  targetAmount?: number;
   lastContributionDate?: string;
   currency?: string;
 }
@@ -11,22 +10,10 @@ interface ContributionCardProps {
 export function ContributionCard({
   memberName = "Member",
   amountContributed,
-  targetAmount,
   lastContributionDate,
-  currency = "$",
+  currency = "GHS ",
 }: ContributionCardProps) {
-  // Calculate percentage toward target if provided
-  const percentage = targetAmount
-    ? Math.min(Math.round((amountContributed / targetAmount) * 100), 100)
-    : null;
-
-  // Format numbers nicely with commas
   const formattedAmount = amountContributed.toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-
-  const formattedTarget = targetAmount?.toLocaleString("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
@@ -60,26 +47,7 @@ export function ContributionCard({
         </p>
       </div>
 
-      {/* Optional Progress Bar (If targetAmount is provided) */}
-      {targetAmount && percentage !== null && (
-        <div className="mt-5 space-y-2">
-          <div className="flex items-center justify-between text-xs text-gray-500">
-            <span>Progress ({percentage}%)</span>
-            <span>
-              Target: {currency}
-              {formattedTarget}
-            </span>
-          </div>
-          <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100">
-            <div
-              className="h-full rounded-full bg-emerald-500 transition-all duration-500"
-              style={{ width: `${percentage}%` }}
-            />
-          </div>
-        </div>
-      )}
-
-      {/* Optional Footer: Last Contribution Date */}
+      {/* Footer: Last Contribution Date */}
       {lastContributionDate && (
         <div className="mt-4 border-t border-gray-100 pt-3 text-xs text-gray-400">
           Last payment: {lastContributionDate}

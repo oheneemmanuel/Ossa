@@ -1,72 +1,131 @@
+// components/ui/dashboard/contributionCard.tsx
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import PaystackButton from "@/components/ui/dashboard/PaymentButtton";
-import { CheckCircle2, Landmark } from "lucide-react";
+import { CheckCircle2, Landmark, ShieldCheck, Sparkles } from "lucide-react";
 
 interface ContributionPaymentProps {
   email: string;
 }
 
+const PRESET_AMOUNTS = [10, 20, 30, 50];
+
 export default function ContributionPayment({
   email,
 }: ContributionPaymentProps) {
   const [amount, setAmount] = useState<number>(0);
-  const [paid, setPaid] = useState(false);
+  const [justPaid, setJustPaid] = useState(false);
+  const router = useRouter();
 
-  if (paid) {
+  const handleSuccess = () => {
+    setJustPaid(true);
+    router.refresh();
+
+    setTimeout(() => {
+      setJustPaid(false);
+      setAmount(0);
+    }, 3500);
+  };
+
+  if (justPaid) {
     return (
-      <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#111C3A]/10 bg-[#111C3A] p-8 text-center shadow-sm">
-        <CheckCircle2
-          className="mx-auto mb-3 h-9 w-9 text-[#B8935A]"
-          strokeWidth={1.5}
-        />
-        <p className="font-serif text-xl text-white">Contribution received</p>
-        <p className="mt-1 text-sm text-white/60">
-          A receipt has been sent to {email}
+      <div className="w-full overflow-hidden rounded-2xl border border-emerald-500/20 bg-[#111C3A] p-8 text-center shadow-md transition-all">
+        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400">
+          <CheckCircle2 className="h-8 w-8" strokeWidth={2} />
+        </div>
+        <h3 className="text-xl font-semibold text-white">Payment Received!</h3>
+        <p className="mt-1.5 text-sm text-[#5B6478]/80 text-gray-300">
+          A receipt has been dispatched to{" "}
+          <span className="font-medium text-white">{email}</span>.
         </p>
+        <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-gray-400">
+          <Sparkles className="h-3.5 w-3.5 text-[#B8935A]" /> Updating
+          dashboard...
+        </span>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto mt-6 max-w-sm overflow-hidden rounded-2xl border border-[#111C3A]/10 bg-[#F7F5F1] shadow-sm">
-      {/* Header strip */}
-      <div className="flex items-center gap-2 border-b border-dashed border-[#111C3A]/15 px-6 py-4">
-        <Landmark className="h-4 w-4 text-[#B8935A]" strokeWidth={1.75} />
-        <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#5B6478]">
-          Member Contribution
+    <div className="w-full rounded-2xl border border-[#111C3A]/10 bg-white p-6 shadow-sm transition-all hover:shadow-md">
+      {/* Header */}
+      <div className="flex items-center justify-between pb-4 border-b border-[#111C3A]/10">
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#111C3A]/5 text-[#B8935A]">
+            <Landmark className="h-5 w-5" strokeWidth={1.75} />
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold text-[#111C3A]">
+              Make a Contribution
+            </h3>
+            <p className="text-xs text-[#5B6478]">Direct member payment</p>
+          </div>
+        </div>
+
+        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20">
+          <ShieldCheck className="h-3 w-3" /> Secure
         </span>
       </div>
 
-      <div className="px-6 pb-6 pt-5">
-        <label className="block text-xs font-medium uppercase tracking-wide text-[#5B6478]">
-          Amount
-        </label>
-
-        <div className="mt-2 flex items-baseline gap-2 border-b-2 border-[#111C3A]/20 pb-2 focus-within:border-[#111C3A] transition-colors">
-          <span className="font-serif text-lg text-[#5B6478]">GHS</span>
-          <input
-            type="number"
-            min={1}
-            placeholder="0.00"
-            value={amount || ""}
-            onChange={(e) => setAmount(Number(e.target.value))}
-            className="w-full bg-transparent font-serif text-3xl tabular-nums text-[#111C3A] placeholder:text-[#111C3A]/25 focus:outline-none"
-          />
+      <div className="mt-5 space-y-4">
+        {/* Preset Amount Pills */}
+        <div>
+          <label className="block text-xs font-medium uppercase tracking-wider text-red-600 mb-2">
+            Quick Select
+          </label>
+          <div className="grid grid-cols-4 gap-2">
+            {PRESET_AMOUNTS.map((preset) => (
+              <button
+                key={preset}
+                type="button"
+                onClick={() => setAmount(preset)}
+                className={`rounded-lg border py-1.5 text-xs font-medium transition-all ${
+                  amount === preset
+                    ? "border-[#111C3A] bg-[#111C3A] text-white shadow-xs"
+                    : "border-[#111C3A]/15 bg-[#F7F5F1]/50 text-[#111C3A] hover:bg-[#F7F5F1]"
+                }`}
+              >
+                GHS {preset}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <p className="mt-3 text-xs leading-relaxed text-[#5B6478]">
-          Paid on behalf of{" "}
-          <span className="font-medium text-[#111C3A]">{email}</span>. Processed
-          securely by Paystack.
+        {/* Custom Input Field */}
+        <div>
+          <label className="block text-xs font-medium uppercase tracking-wider text-black">
+            Or Enter Custom Amount
+          </label>
+          <div className="mt-1.5 flex items-center rounded-xl border border-[#111C3A]/15 bg-[#F7F5F1]/40 px-3.5 py-2.5 focus-within:border-[#111C3A] focus-within:bg-white focus-within:ring-2 focus-within:ring-[#111C3A]/10 transition-all">
+            <span className="text-sm font-semibold text-[#5B6478] pr-2 border-r border-[#111C3A]/10">
+              GHS
+            </span>
+            <input
+              type="number"
+              min={1}
+              placeholder="0.00"
+              value={amount || ""}
+              onChange={(e) => setAmount(Number(e.target.value))}
+              className="w-full bg-transparent pl-3 font-semibold text-lg text-[#111C3A] placeholder:text-[#111C3A]/30 focus:outline-none tabular-nums"
+            />
+          </div>
+        </div>
+
+        {/* Security / Account notice */}
+        <p className="text-xs leading-relaxed text-[#5B6478] bg-[#F7F5F1]/60 rounded-lg p-2.5 border border-[#111C3A]/5">
+          Contributing as{" "}
+          <span className="font-semibold text-[#111C3A]">{email}</span>.
+          Encrypted & processed via Paystack.
         </p>
 
-        <div className="mt-5">
+        {/* Paystack CTA Button Wrapper */}
+        <div className="pt-1">
           <PaystackButton
             email={email}
             amount={amount}
-            onSuccess={() => setPaid(true)}
+            onSuccess={handleSuccess}
           />
         </div>
       </div>
