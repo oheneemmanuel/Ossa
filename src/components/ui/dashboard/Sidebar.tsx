@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -66,7 +66,12 @@ export default function SideNav() {
     <>
       {/* MOBILE TOP BAR */}
       <div className="fixed inset-x-0 top-0 z-30 flex h-14 items-center justify-between border-b border-gray-200 bg-white px-4 shadow-sm md:hidden">
-        <h1 className="text-base font-semibold text-gray-900">OSSA</h1>
+        <div className="flex items-center gap-3">
+          <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full border border-gray-200 bg-gray-100">
+            <Image src="/li.jpg" alt="OSSA Logo" fill className="object-cover" />
+          </div>
+          <h1 className="text-base font-semibold text-black">OSSA</h1>
+        </div>
         <button
           type="button"
           aria-label={isOpen ? "Close sidebar" : "Open sidebar"}
@@ -83,7 +88,14 @@ export default function SideNav() {
           isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         }`}
       >
-        <div className="flex h-14 items-center justify-center border-b border-gray-200 md:h-16">
+        <div className="flex h-14 items-center gap-3 border-b border-gray-200 px-4 md:h-16">
+          <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border border-gray-200 bg-gray-100">
+            <Image 
+            src="/li.jpg" 
+            alt="OSSA Logo" 
+            fill className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+          </div>
           <h1 className="text-lg font-semibold text-gray-900">OSSA</h1>
         </div>
 

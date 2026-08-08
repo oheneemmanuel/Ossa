@@ -2,7 +2,7 @@
 "use server";
 
 import { db } from "@/lib/prisma";
-import { auth } from "@/auth.config";
+import { auth, signOut } from "@/auth.config";
 import { revalidatePath } from "next/cache";
 
 // ...your existing login(...) and register(...) functions stay as they are...
@@ -32,4 +32,34 @@ export async function updateUserSettings(formData: {
   });
 
   revalidatePath("/dashboard/settings");
+}
+
+export async function deleteUserAccount() {
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    return {
+      success: false,
+      error: "Unauthorized",
+    };
+  }
+
+  try {
+    await db.user.delete({
+      where: {
+        id: session.user.id,
+      },
+    });
+  } catch (error) {
+    console.error("Delete User Error:", error);
+
+    return {
+      success: false,
+      error: "Something went wrong while deleting your account.",
+    };
+  }
+
+  await signOut({
+    redirectTo: "/login",
+  });
 }

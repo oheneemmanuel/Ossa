@@ -35,6 +35,8 @@ export default async function DashboardPage() {
   const amountContributed = totalPesewas / 100;
   const lastContributionDate = contributions[0]?.createdAt.toISOString().split("T")[0] ?? null;
 
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  
   return (
     <div className="min-h-screen bg-[#F7F5F1]">
       <main className="mx-auto max-w-6xl px-6 py-8">

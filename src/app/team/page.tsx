@@ -4,23 +4,23 @@ import Link from "next/link";
 const members = [
   {
     role: "President",
-    name: "Mr. Ansah Mante Hayfor",
-    image: "/team/president.jpg",
+    name: "Mr. Hayford Ansah Mante",
+    image: "/team/president.webp",
   },
   {
     role: "Vice President",
-    name: "Mr. Ohene Emmanuel Kwakye",
+    name: "Mr. Emmanuel Kwakye Ohene",
     image: "/team/vice.webp",
   },
   {
     role: "Secretary",
     name: "Mr. Dennis K. Lartey",
-    image: "/team/dennis.jpg",
+    image: "/team/dennis.webp",
   },
   {
     role: "Programs Lead",
-    name: "Patric N. Gyamfi",
-    image: "/team/dangote.jpg",
+    name: "Patrick N. Gyamfi",
+    image: "/team/dangote.webp",
   },
 ];
 
@@ -51,7 +51,7 @@ export default function TeamPage() {
                   alt={`${member.role} portrait`}
                   fill
                   className="object-cover"
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  sizes="100vw"
                 />
               </div>
               <div className="p-3 sm:p-3.5">

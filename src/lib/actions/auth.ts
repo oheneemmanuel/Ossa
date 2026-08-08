@@ -171,3 +171,4 @@ export async function createUserAccount(formData: FormData) {
 }
 
 // Login is now handled by Auth.js — see src/auth.config.ts (Credentials provider, `authorize` callback).
+

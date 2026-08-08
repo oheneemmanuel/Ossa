@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GraduationCap } from "lucide-react";
+import Image from "next/image";
 import MobileMenu from "@/components/ui/MobileMenu";
 import DesktopNav from "@/components/ui/DesktopNav";
 
@@ -35,14 +35,19 @@ export default function Header() {
       <div className="mx-auto flex max-w-7xl flex-col px-6 py-4 md:flex-row md:items-center md:justify-between relative">
         <div className="flex items-center justify-between w-full md:w-auto">
           <Link href="/" className="flex items-center gap-3">
-            <div className="bg-blue-500 border-2 border-slate-950 p-2.5 rounded-xl text-slate-950 font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-              <GraduationCap className="w-7 h-7" />
+            <div className="bg-white p-2.5">
+              <Image
+                src="/l1.jpg"
+                alt="OSSA Logo"
+                width={50}
+                height={50}
+              />
             </div>
             <div>
-              <h1 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-slate-950">
+              <h1 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-black">
                 OSSA
               </h1>
-              <p className="hidden text-xs font-bold text-slate-500 sm:block tracking-wide">
+              <p className="hidden text-xs font-bold text-slate-500 sm:block tracking-wide text-blue-600">
                 OLD SCIENCE STUDENT ASSOCIATION
               </p>
             </div>

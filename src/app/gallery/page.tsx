@@ -3,7 +3,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ArrowLeft,
+  Maximize2,
+  X,
+} from "lucide-react";
 
 const galleryItems = [
   {
@@ -30,6 +36,7 @@ const galleryItems = [
 
 export default function GalleryPage() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   const showNext = () => {
     setActiveIndex((current) => (current + 1) % galleryItems.length);
@@ -44,100 +51,148 @@ export default function GalleryPage() {
   const activeImage = galleryItems[activeIndex];
 
   return (
-    <main className="min-h-screen bg-[#f7f5ef] px-4 py-6 sm:px-8 sm:py-12 text-slate-900">
-      <div className="mx-auto max-w-4xl">
-        {/* HEADER SECTION (Flat layout without outer card) */}
-        <div className="mb-6 sm:mb-8">
-          <p className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-[#FF6B35]">
-            About OSSA
-          </p>
-          <h1 className="mt-1 text-2xl sm:text-4xl font-black uppercase tracking-tight text-slate-950">
-            Photo Gallery
-          </h1>
-          <p className="mt-2 text-sm sm:text-base font-semibold text-slate-600">
-            A collection of memorable moments from OSSA activities, projects,
-            and community events.
-          </p>
+    <main className="min-h-screen bg-slate-50/50 px-4 py-8 sm:px-8 sm:py-12 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+      <div className="mx-auto max-w-4xl space-y-8">
+        {/* HEADER SECTION */}
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
+              About OSSA
+            </span>
+            <h1 className="mt-1 text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100 sm:text-4xl">
+              Photo Gallery
+            </h1>
+            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+              A collection of memorable moments from OSSA activities, projects,
+              and community events.
+            </p>
+          </div>
+
+          <Link
+            href="/"
+            className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-xs font-medium text-slate-700 shadow-sm hover:bg-slate-50 transition dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span>Back Home</span>
+          </Link>
         </div>
 
         {/* MAIN VIEWER CONTAINER */}
-        <div className="rounded-2xl border-2 border-slate-950 bg-white p-3 sm:p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-          {/* IMAGE BOX */}
-          <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-xl border-2 border-slate-950 bg-slate-100">
+        <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-6">
+          {/* IMAGE CONTAINER */}
+          <div className="group relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 sm:aspect-[16/9]">
             <Image
               src={activeImage.src}
               alt={activeImage.alt}
               fill
-              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 896px"
+              className="object-cover transition-transform duration-300 group-hover:scale-[1.01]"
               priority
             />
-          </div>
 
-          {/* CAPTION & NAVIGATION CONTROLS */}
-          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-[#0b4f6c]">
-                Image {activeIndex + 1} of {galleryItems.length}
-              </span>
-              <h2 className="text-base sm:text-xl font-extrabold text-slate-950">
-                {activeImage.title}
-              </h2>
-            </div>
+            {/* Lightbox / Zoom Trigger Button */}
+            <button
+              type="button"
+              onClick={() => setIsLightboxOpen(true)}
+              className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-lg bg-black/40 text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/60"
+              aria-label="Expand image"
+            >
+              <Maximize2 className="h-4 w-4" />
+            </button>
 
-            {/* PREV / NEXT BUTTONS */}
-            <div className="flex items-center gap-2 self-end sm:self-auto">
+            {/* Floating Navigation Controls */}
+            <div className="absolute inset-x-3 top-1/2 flex -translate-y-1/2 justify-between">
               <button
                 type="button"
                 onClick={showPrevious}
-                className="flex items-center gap-1 rounded-xl border-2 border-slate-950 bg-white px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-black uppercase tracking-wider text-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-slate-800 shadow-md backdrop-blur-sm hover:bg-white active:scale-95 transition dark:bg-slate-900/90 dark:text-slate-100 dark:hover:bg-slate-900"
+                aria-label="Previous image"
               >
-                <ChevronLeft className="w-4 h-4" />
-                <span>Prev</span>
+                <ChevronLeft className="h-5 w-5" />
               </button>
               <button
                 type="button"
                 onClick={showNext}
-                className="flex items-center gap-1 rounded-xl border-2 border-slate-950 bg-[#FF6B35] px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-black uppercase tracking-wider text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-slate-800 shadow-md backdrop-blur-sm hover:bg-white active:scale-95 transition dark:bg-slate-900/90 dark:text-slate-100 dark:hover:bg-slate-900"
+                aria-label="Next image"
               >
-                <span>Next</span>
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="h-5 w-5" />
               </button>
             </div>
           </div>
 
-          {/* PROGRESS INDICATORS */}
-          <div className="mt-4 flex gap-1.5 sm:gap-2">
+          {/* CAPTION & COUNTER */}
+          <div className="mt-4 flex items-center justify-between border-b border-slate-100 pb-4 dark:border-slate-800">
+            <div>
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                {activeImage.title}
+              </h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                {activeImage.alt}
+              </p>
+            </div>
+            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+              {activeIndex + 1} / {galleryItems.length}
+            </span>
+          </div>
+
+          {/* THUMBNAIL NAVIGATOR */}
+          <div className="mt-4 grid grid-cols-4 gap-2.5 sm:gap-3">
             {galleryItems.map((item, index) => (
               <button
                 key={item.title}
                 type="button"
                 onClick={() => setActiveIndex(index)}
-                className={`h-2 flex-1 rounded-full border-2 border-slate-950 transition-all ${
-                  index === activeIndex ? "bg-[#FF6B35]" : "bg-slate-200"
+                className={`relative aspect-[16/10] w-full overflow-hidden rounded-lg border transition-all ${
+                  index === activeIndex
+                    ? "border-blue-600 ring-2 ring-blue-600/20 dark:border-blue-500"
+                    : "border-slate-200 opacity-60 hover:opacity-100 dark:border-slate-800"
                 }`}
-                aria-label={`Show ${item.title}`}
-              />
+              >
+                <Image
+                  src={item.src}
+                  alt={item.title}
+                  fill
+                  sizes="200px"
+                  className="object-cover"
+                />
+              </button>
             ))}
           </div>
         </div>
 
         {/* BOTTOM ACTION LINKS */}
-        <div className="mt-6 flex flex-wrap gap-3">
+        <div className="flex justify-end gap-3">
           <Link
             href="/about/history"
-            className="rounded-xl border-2 border-slate-950 bg-[#0b4f6c] px-4 py-2.5 text-xs sm:text-sm font-black uppercase tracking-wider text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all"
+            className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-blue-700 transition"
           >
             Learn Our History
           </Link>
-          <Link
-            href="/"
-            className="flex items-center gap-1.5 rounded-xl border-2 border-slate-950 bg-white px-4 py-2.5 text-xs sm:text-sm font-black uppercase tracking-wider text-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back Home</span>
-          </Link>
         </div>
       </div>
+
+      {/* FULLSCREEN LIGHTBOX MODAL */}
+      {isLightboxOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-md animate-in fade-in duration-200">
+          <button
+            type="button"
+            onClick={() => setIsLightboxOpen(false)}
+            className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition"
+          >
+            <X className="h-5 w-5" />
+          </button>
+          <div className="relative aspect-[16/9] w-full max-w-5xl overflow-hidden rounded-2xl">
+            <Image
+              src={activeImage.src}
+              alt={activeImage.alt}
+              fill
+              sizes="100vw"
+              className="object-contain"
+            />
+          </div>
+        </div>
+      )}
     </main>
   );
 }
