@@ -5,8 +5,9 @@ import { db } from "@/lib/prisma";
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   const session = await auth();
 
   if (!session?.user || session.user.role !== "ADMIN") {
@@ -16,9 +17,7 @@ export async function PATCH(
   const body = await req.json();
   const { firstName, lastName, email, phone, gender, yearCompleted, location, role } = body;
 
-  // Prevent an admin from accidentally locking themselves out by demoting
-  // their own account when they're the one making the request.
-  if (params.id === session.user.id && role && role !== "ADMIN") {
+  if (id === session.user.id && role && role !== "ADMIN") {
     return NextResponse.json(
       { error: "You can't remove your own admin access." },
       { status: 400 }
@@ -27,7 +26,7 @@ export async function PATCH(
 
   try {
     const updated = await db.user.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         ...(firstName && { firstName }),
         ...(lastName && { lastName }),
@@ -60,15 +59,16 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   const session = await auth();
 
   if (!session?.user || session.user.role !== "ADMIN") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   }
 
-  if (params.id === session.user.id) {
+  if (id === session.user.id) {
     return NextResponse.json(
       { error: "You can't delete your own account." },
       { status: 400 }
@@ -76,7 +76,7 @@ export async function DELETE(
   }
 
   try {
-    await db.user.delete({ where: { id: params.id } });
+    await db.user.delete({ where: { id } });
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json({ error: "Failed to delete member" }, { status: 500 });
