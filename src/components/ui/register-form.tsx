@@ -108,18 +108,18 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="w-full max-w-2xl rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xl shadow-slate-200/50 dark:border-slate-800 dark:bg-slate-900 dark:shadow-none sm:p-8">
+    <div className="w-full max-w-2xl rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xl shadow-slate-200/50 sm:p-8">
       {/* Header Info */}
       <div className="mb-8">
-        <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 mb-3">
-          <Shield className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
+        <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 mb-3">
+          <Shield className="h-3.5 w-3.5 text-blue-600" />
           <span>OSSA Membership</span>
         </div>
 
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+        <h2 className="text-2xl font-bold tracking-tight text-black">
           Create your account
         </h2>
-        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+        <p className="mt-1 text-sm text-slate-500">
           Join the science student community to stay connected with events,
           updates, and opportunities.
         </p>
@@ -127,16 +127,16 @@ export default function RegisterForm() {
 
       {/* Error Alert */}
       {errorMessage && (
-        <div className="mb-6 flex items-center gap-2.5 rounded-xl border border-rose-200 bg-rose-50/80 p-3.5 text-xs font-medium text-rose-800 dark:border-rose-900/50 dark:bg-rose-950/30 dark:text-rose-300">
-          <AlertCircle className="h-4 w-4 shrink-0 text-rose-600 dark:text-rose-400" />
+        <div className="mb-6 flex items-center gap-2.5 rounded-xl border border-rose-200 bg-rose-50/80 p-3.5 text-xs font-medium text-rose-800">
+          <AlertCircle className="h-4 w-4 shrink-0 text-rose-600" />
           <span>{errorMessage}</span>
         </div>
       )}
 
       {/* Success Alert */}
       {successMessage && (
-        <div className="mb-6 flex items-center gap-2.5 rounded-xl border border-emerald-200 bg-emerald-50/80 p-3.5 text-xs font-medium text-emerald-800 dark:border-emerald-900/50 dark:bg-emerald-950/30 dark:text-emerald-300">
-          <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
+        <div className="mb-6 flex items-center gap-2.5 rounded-xl border border-emerald-200 bg-emerald-50/80 p-3.5 text-xs font-medium text-emerald-800">
+          <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" />
           <span>{successMessage}</span>
         </div>
       )}
@@ -147,12 +147,12 @@ export default function RegisterForm() {
           <div>
             <label
               htmlFor="firstName"
-              className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
+              className="block text-xs font-semibold text-slate-700 mb-1.5"
             >
               First Name *
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                 <User className="h-4 w-4" />
               </div>
               <input
@@ -163,7 +163,7 @@ export default function RegisterForm() {
                 placeholder="Kwame"
                 value={formData.firstName}
                 onChange={handleChange}
-                className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:placeholder-slate-500 dark:focus:border-blue-500 dark:focus:bg-slate-950 dark:focus:ring-blue-500/20"
+                className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 py-2.5 text-sm text-black placeholder-slate-400 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10"
               />
             </div>
           </div>
@@ -171,12 +171,12 @@ export default function RegisterForm() {
           <div>
             <label
               htmlFor="lastName"
-              className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
+              className="block text-xs font-semibold text-slate-700 mb-1.5"
             >
               Last Name *
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                 <User className="h-4 w-4" />
               </div>
               <input
@@ -187,7 +187,7 @@ export default function RegisterForm() {
                 placeholder="Mensah"
                 value={formData.lastName}
                 onChange={handleChange}
-                className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:placeholder-slate-500 dark:focus:border-blue-500 dark:focus:bg-slate-950 dark:focus:ring-blue-500/20"
+                className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 py-2.5 text-sm text-black placeholder-slate-400 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10"
               />
             </div>
           </div>
@@ -198,12 +198,12 @@ export default function RegisterForm() {
           <div>
             <label
               htmlFor="email"
-              className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
+              className="block text-xs font-semibold text-slate-700 mb-1.5"
             >
               Email Address *
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                 <Mail className="h-4 w-4" />
               </div>
               <input
@@ -214,7 +214,7 @@ export default function RegisterForm() {
                 placeholder="member@ossa.org"
                 value={formData.email}
                 onChange={handleChange}
-                className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:placeholder-slate-500 dark:focus:border-blue-500 dark:focus:bg-slate-950 dark:focus:ring-blue-500/20"
+                className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 py-2.5 text-sm text-black placeholder-slate-400 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10"
               />
             </div>
           </div>
@@ -222,12 +222,12 @@ export default function RegisterForm() {
           <div>
             <label
               htmlFor="phone"
-              className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
+              className="block text-xs font-semibold text-slate-700 mb-1.5"
             >
               Phone Number *
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                 <Phone className="h-4 w-4" />
               </div>
               <input
@@ -238,7 +238,7 @@ export default function RegisterForm() {
                 placeholder="+233 24 000 0000"
                 value={formData.phone}
                 onChange={handleChange}
-                className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:placeholder-slate-500 dark:focus:border-blue-500 dark:focus:bg-slate-950 dark:focus:ring-blue-500/20"
+                className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 py-2.5 text-sm text-black placeholder-slate-400 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10"
               />
             </div>
           </div>
@@ -249,7 +249,7 @@ export default function RegisterForm() {
           <div>
             <label
               htmlFor="gender"
-              className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
+              className="block text-xs font-semibold text-slate-700 mb-1.5"
             >
               Gender *
             </label>
@@ -258,7 +258,7 @@ export default function RegisterForm() {
               name="gender"
               value={formData.gender}
               onChange={handleChange}
-              className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-sm text-slate-900 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:focus:border-blue-500 dark:focus:bg-slate-950 dark:focus:ring-blue-500/20"
+              className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-sm text-black transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10"
             >
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -268,12 +268,12 @@ export default function RegisterForm() {
           <div>
             <label
               htmlFor="yearCompleted"
-              className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
+              className="block text-xs font-semibold text-slate-700 mb-1.5"
             >
               Year Completed *
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                 <Calendar className="h-4 w-4" />
               </div>
               <input
@@ -286,7 +286,7 @@ export default function RegisterForm() {
                 placeholder="2022"
                 value={formData.yearCompleted}
                 onChange={handleChange}
-                className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:placeholder-slate-500 dark:focus:border-blue-500 dark:focus:bg-slate-950 dark:focus:ring-blue-500/20"
+                className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 py-2.5 text-sm text-black placeholder-slate-400 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10"
               />
             </div>
           </div>
@@ -296,12 +296,12 @@ export default function RegisterForm() {
         <div>
           <label
             htmlFor="location"
-            className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
+            className="block text-xs font-semibold text-slate-700 mb-1.5"
           >
             Location / City *
           </label>
           <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
               <MapPin className="h-4 w-4" />
             </div>
             <input
@@ -312,7 +312,7 @@ export default function RegisterForm() {
               placeholder="Accra, Ghana"
               value={formData.location}
               onChange={handleChange}
-              className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:placeholder-slate-500 dark:focus:border-blue-500 dark:focus:bg-slate-950 dark:focus:ring-blue-500/20"
+              className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 py-2.5 text-sm text-black placeholder-slate-400 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10"
             />
           </div>
         </div>
@@ -322,12 +322,12 @@ export default function RegisterForm() {
           <div>
             <label
               htmlFor="password"
-              className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
+              className="block text-xs font-semibold text-slate-700 mb-1.5"
             >
               Password *
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                 <Lock className="h-4 w-4" />
               </div>
               <input
@@ -339,12 +339,12 @@ export default function RegisterForm() {
                 placeholder="••••••••"
                 value={formData.password}
                 onChange={handleChange}
-                className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-10 py-2.5 text-sm text-slate-900 placeholder-slate-400 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:placeholder-slate-500 dark:focus:border-blue-500 dark:focus:bg-slate-950 dark:focus:ring-blue-500/20"
+                className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-10 py-2.5 text-sm text-black placeholder-slate-400 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 focus:outline-none"
+                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 focus:outline-none"
               >
                 {showPassword ? (
                   <EyeOff className="h-4 w-4" />
@@ -358,12 +358,12 @@ export default function RegisterForm() {
           <div>
             <label
               htmlFor="confirmPassword"
-              className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
+              className="block text-xs font-semibold text-slate-700 mb-1.5"
             >
               Confirm Password *
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                 <Lock className="h-4 w-4" />
               </div>
               <input
@@ -375,7 +375,7 @@ export default function RegisterForm() {
                 placeholder="••••••••"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:placeholder-slate-500 dark:focus:border-blue-500 dark:focus:bg-slate-950 dark:focus:ring-blue-500/20"
+                className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 py-2.5 text-sm text-black placeholder-slate-400 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10"
               />
             </div>
           </div>
@@ -386,7 +386,7 @@ export default function RegisterForm() {
           <button
             type="submit"
             disabled={isPending}
-            className="group relative flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-blue-700 active:scale-[0.99] disabled:opacity-60 dark:bg-blue-600 dark:hover:bg-blue-500"
+            className="group relative flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-blue-700 active:scale-[0.99] disabled:opacity-60"
           >
             {isPending ? (
               <>
@@ -404,12 +404,12 @@ export default function RegisterForm() {
       </form>
 
       {/* FOOTER LINK */}
-      <div className="mt-6 border-t border-slate-100 dark:border-slate-800 pt-5 text-center">
-        <p className="text-xs text-slate-500 dark:text-slate-400">
+      <div className="mt-6 border-t border-slate-100 pt-5 text-center">
+        <p className="text-xs text-slate-500">
           Already have an account?{" "}
           <Link
             href="/login"
-            className="font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 hover:underline ml-0.5"
+            className="font-semibold text-blue-600 hover:text-blue-700 hover:underline ml-0.5"
           >
             Sign in here
           </Link>

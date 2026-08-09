@@ -12,6 +12,11 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  MEMBER
+  ADMIN
+}
+
 model User {
   id            String   @id @default(cuid())
   firstName     String
@@ -22,9 +27,11 @@ model User {
   yearCompleted Int
   location      String
   password      String
+  role Role @default(MEMBER)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   contributions Contribution[]
+  resetTokens PasswordResetToken[]
 }
 
 model Contribution {
@@ -36,4 +43,16 @@ model Contribution {
 
   userId String 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model PasswordResetToken {
+  id String @id @default(cuid())
+  token String @unique
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+
 }

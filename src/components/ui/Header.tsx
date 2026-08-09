@@ -37,7 +37,7 @@ export default function Header() {
           <Link href="/" className="flex items-center gap-3">
             <div className="bg-white p-2.5">
               <Image
-                src="/l1.jpg"
+                src="/li.jpg"
                 alt="OSSA Logo"
                 width={50}
                 height={50}
