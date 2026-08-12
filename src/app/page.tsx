@@ -254,29 +254,35 @@ export default function Home() {
       {/* CTA CALL OUT */}
       <section
         id="join"
-        className="bg-[#0a3143] py-20 text-slate-950 border-t-2 border-slate-950 relative overflow-hidden"
+        className="relative overflow-hidden bg-gradient-to-b from-slate-900 via-[#0a3143] to-slate-800 border-t border-slate-700 py-20 text-white"
       >
-        <Reveal className="mx-auto max-w-4xl px-6 text-center relative z-10">
-          <h2 className="mb-4 text-3xl font-black uppercase tracking-tight sm:text-4xl text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_45%)]" />
+        <Reveal className="relative z-10 mx-auto max-w-4xl px-6 text-center">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.5em] text-blue-300">
+            Join the movement
+          </p>
+          <h2 className="mb-6 text-4xl font-black uppercase tracking-tight sm:text-5xl">
             Ready to empower future scientists?
           </h2>
-          <p className="mb-8 mx-auto max-w-xl text-base font-bold text-[#FFE600] leading-relaxed">
-            Whether you graduated years ago or recently entered a scientific
-            field, your insight and contribution can reshape educational
-            outcomes.
+          <p className="mx-auto mb-10 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">
+            Whether you graduated years ago or recently entered a scientific field,
+            your insight and contribution can reshape educational outcomes.
           </p>
-          <Link
-            href="/register"
-            className="inline-block bg-white text-slate-950 px-8 py-4 border-2 border-slate-950 rounded-xl font-black uppercase tracking-wider text-sm shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
-          >
-            Register Membership
-          </Link>
-          <Link
-            href="/contact"
-            className="bg-white text-slate-950 px-6 py-3 border-2 border-slate-950 rounded-xl font-bold tracking-wide shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all text-center ml-6"
-          >
-            Contact Us
-          </Link>
+
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-5">
+            <Link
+              href="/register"
+              className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-slate-900 shadow-lg shadow-slate-950/10 transition hover:-translate-y-0.5 hover:bg-slate-100"
+            >
+              Register Membership
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-8 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:border-white hover:bg-white/15"
+            >
+              Contact Us
+            </Link>
+          </div>
         </Reveal>
       </section>
     </main>

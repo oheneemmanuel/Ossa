@@ -1,4 +1,6 @@
+// app/api/paystack/verify/route.ts
 import { NextRequest } from "next/server";
+import { recordContribution } from "@/lib/paystack";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -7,7 +9,7 @@ export async function GET(request: NextRequest) {
   if (!reference) {
     return Response.json(
       { status: false, message: "No reference supplied" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -18,21 +20,21 @@ export async function GET(request: NextRequest) {
         headers: {
           Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
         },
-      }
+      },
     );
 
     const data = await res.json();
 
-    // TODO: if data.data.status === "success", update your DB here
-    // (mark contribution as paid, credit user, etc.) — this is the only
-    // point you should trust that a payment actually went through.
+    if (data.status === true && data.data?.status === "success") {
+      await recordContribution(data.data);
+    }
 
     return Response.json(data, { status: res.status });
   } catch (err) {
     console.error("Paystack verify error:", err);
     return Response.json(
       { status: false, message: "Verification failed" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

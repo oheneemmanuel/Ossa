@@ -7,7 +7,7 @@ const CONTACT_INFO = {
   email: "contact@ollafua19@gmail.com",
   whatsappNumber: "233544204635",
   whatsappDisplay: "+233 54 420 4635",
-  location: "OSSA Secretariat, Science Block, High School Campus",
+  location: "OSSA - Akyem Akroso",
 };
 
 export default function ContactContent() {
@@ -88,7 +88,7 @@ export default function ContactContent() {
             <span className="text-xs sm:text-sm font-bold">{CONTACT_INFO.location}</span>
           </div>
           <span className="text-[10px] font-black uppercase bg-amber-200 px-3 py-1 rounded-lg border border-slate-950 whitespace-nowrap">
-            Mon - Fri: 8am - 5pm
+            Mon - Fri: 8am - 9pm
           </span>
         </div>
       </Reveal>
