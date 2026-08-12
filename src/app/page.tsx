@@ -32,9 +32,9 @@ const focusAreas = [
 ];
 
 const stats = [
-  { label: "Active Members", value: "500+" },
+  { label: "Active Members", value: "100+" },
   { label: "Lab Projects", value: "14" },
-  { label: "Dues & Grants", value: "GH₵ 85K+" },
+  { label: "Dues & Grants", value: "GH₵ 6K+" },
   { label: "STEM Scholarships", value: "25" },
 ];
 
@@ -63,8 +63,8 @@ export default function Home() {
             </h1>
 
             <p className="mb-8 max-w-2xl text-base sm:text-lg text-white/85 font-medium leading-relaxed">
-              OSSA reunites legacy science students to empower new generations.
-              We build school laboratories, fund STEM resources, and maintain a
+              OSSA reunites old science students to empower new generations. We
+              build school laboratories, fund STEM resources, and maintain a
               lifelong network of scientific excellence.
             </p>
 
@@ -136,6 +136,85 @@ export default function Home() {
         </div>
       </section>
 
+      {/* EVENTS PREVIEW */}
+      <section id="events" className="bg-white py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal className="mb-14 max-w-3xl">
+            <p className="mb-2 text-xs font-black uppercase tracking-[0.35em] text-blue-600">
+              Upcoming Events
+            </p>
+            <h2 className="text-3xl font-black uppercase tracking-tight text-slate-950 sm:text-4xl">
+              Join OSSA's community events for learning and collaboration.
+            </h2>
+          </Reveal>
+
+          <div className="grid gap-6 lg:grid-cols-3">
+            <Reveal>
+              <article className="rounded-3xl bg-slate-50 p-6 ring-1 ring-slate-200 text-slate-950">
+                <div className="flex items-center gap-3 mb-4 text-blue-600">
+                  <Calendar className="w-5 h-5" />
+                  <span className="text-sm font-semibold uppercase tracking-[0.25em] text-blue-600">
+                    STEM Exhibition
+                  </span>
+                </div>
+                <h3 className="text-xl font-semibold mb-2">
+                  Annual OSSA STEM Exhibition
+                </h3>
+                <p className="text-sm leading-7 text-slate-700">
+                  Celebrate innovation with school projects, science
+                  demonstrations, and alumni mentorship sessions.
+                </p>
+              </article>
+            </Reveal>
+
+            <Reveal delay={80}>
+              <article className="rounded-3xl bg-slate-50 p-6 ring-1 ring-slate-200 text-slate-950">
+                <div className="flex items-center gap-3 mb-4 text-blue-600">
+                  <Calendar className="w-5 h-5" />
+                  <span className="text-sm font-semibold uppercase tracking-[0.25em] text-blue-600">
+                    Materials Drive
+                  </span>
+                </div>
+                <h3 className="text-xl font-semibold mb-2">
+                  Lab Resource Distribution
+                </h3>
+                <p className="text-sm leading-7 text-slate-700">
+                  Support regional science classrooms with donated lab kits,
+                  textbooks, and teaching resources.
+                </p>
+              </article>
+            </Reveal>
+
+            <Reveal delay={160}>
+              <article className="rounded-3xl bg-slate-50 p-6 ring-1 ring-slate-200 text-slate-950">
+                <div className="flex items-center gap-3 mb-4 text-blue-600">
+                  <Calendar className="w-5 h-5" />
+                  <span className="text-sm font-semibold uppercase tracking-[0.25em] text-blue-600">
+                    Career Talk
+                  </span>
+                </div>
+                <h3 className="text-xl font-semibold mb-2">
+                  Alumni Career Conversations
+                </h3>
+                <p className="text-sm leading-7 text-slate-700">
+                  Hear from science professionals and educators about careers,
+                  research, and community impact.
+                </p>
+              </article>
+            </Reveal>
+          </div>
+
+          <div className="mt-10 text-center">
+            <Link
+              href="/events"
+              className="inline-block bg-blue-600 text-white px-8 py-3 rounded-2xl font-semibold transition hover:bg-blue-700"
+            >
+              See All Events
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ABOUT / FOCUS AREAS */}
       <section id="about" className="bg-white py-20">
         <div className="mx-auto max-w-7xl px-6">
@@ -191,6 +270,12 @@ export default function Home() {
             className="inline-block bg-white text-slate-950 px-8 py-4 border-2 border-slate-950 rounded-xl font-black uppercase tracking-wider text-sm shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
           >
             Register Membership
+          </Link>
+          <Link
+            href="/contact"
+            className="bg-white text-slate-950 px-6 py-3 border-2 border-slate-950 rounded-xl font-bold tracking-wide shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all text-center ml-6"
+          >
+            Contact Us
           </Link>
         </Reveal>
       </section>

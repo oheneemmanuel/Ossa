@@ -10,7 +10,7 @@ export default function ProjectsPage() {
   return (
     <main className="min-h-screen bg-[#f7f5ef] px-6 py-16 text-slate-900">
       <div className="mx-auto max-w-5xl rounded-[24px] border border-slate-200 bg-white p-8 shadow-sm">
-        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#f26419]">
+        <p className="text-lg font-semibold uppercase tracking-[0.3em] text-blue-500">
           Education Hub
         </p>
         <h1 className="mt-3 text-4xl font-semibold tracking-[0.02em] text-slate-950">

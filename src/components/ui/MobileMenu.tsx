@@ -75,6 +75,7 @@ export default function MobileMenu({ navLinks }: { navLinks: NavLink[] }) {
             className={pathname === "/" ? inactiveColor : activeColor}
           />
         );
+      
       default:
         return <Home size={19} className={inactiveColor} />;
     }
@@ -86,7 +87,7 @@ export default function MobileMenu({ navLinks }: { navLinks: NavLink[] }) {
       <button
         onClick={() => setIsOpen(true)}
         type="button"
-        className="md:hidden rounded-lg border-2 border-slate-950 bg-white p-1.5 text-slate-950 transition hover:bg-[#f7c59f]"
+        className="md:hidden rounded-lg border-2 border-slate-950 bg-white p-1.5 text-slate-950 transition hover:bg-blue-500"
         aria-label="Open navigation menu"
       >
         <Menu className="h-7 w-7" />
@@ -152,6 +153,7 @@ export default function MobileMenu({ navLinks }: { navLinks: NavLink[] }) {
                                 isActive
                                   ? "text-slate-950"
                                   : "text-slate-700 hover:text-slate-950"
+                                  
                               }`}
                             >
                               {getIcon(link.href)}
@@ -186,8 +188,8 @@ export default function MobileMenu({ navLinks }: { navLinks: NavLink[] }) {
                                     }}
                                     className={`mt-1 flex items-center rounded-lg px-3 py-2 text-sm font-semibold transition ${
                                       isSubActive
-                                        ? "bg-[#f26419] text-white"
-                                        : "text-slate-700 hover:bg-white hover:text-slate-950"
+                                        ? "bg-blue-500 text-white"
+                                        : "text-slate-700 hover:bg-blue-400 hover:text-slate-950"
                                     }`}
                                   >
                                     {subLink.name}
@@ -207,7 +209,7 @@ export default function MobileMenu({ navLinks }: { navLinks: NavLink[] }) {
                         onClick={() => setIsOpen(false)}
                         className={`flex items-center gap-3.5 rounded-lg border-2 px-4 py-3 text-sm font-bold transition ${
                           isActive
-                            ? "border-slate-950 bg-[#f26419] text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                            ? "border-slate-950 bg-blue-600 text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
                             : "border-transparent text-slate-700 hover:border-slate-950 hover:bg-white hover:text-slate-950"
                         }`}
                       >

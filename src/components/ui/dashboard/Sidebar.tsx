@@ -1,9 +1,10 @@
 "use client";
 import Image from "next/image";
-import { useSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useToast } from "@/components/providers/ToastProvider";
 import {
   House,
   LayoutDashboard,
@@ -32,16 +33,21 @@ const adminLinks = [
   { name: "Finance (Admin)", href: "/admin/finance", icon: Wallet },
 ];
 
-// "Logout" removed from this list — handled separately below since it's an action, not a route
 const accountLinks = [
-  { name: "Profile", href: "/profile", icon: UserCheck2Icon },
+  { name: "Profile", href: "/dashboard/settings", icon: UserCheck2Icon },
 ];
 
-export default function SideNav() {
+type SidebarUser = {
+  firstName: string;
+  lastName: string;
+  role: string;
+  profileImageUrl: string | null;
+};
+
+export default function Sidebar({ user }: { user: SidebarUser }) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const { data: session, status } = useSession();
 
   useEffect(() => {
     setMounted(true);
@@ -62,16 +68,29 @@ export default function SideNav() {
     }
   };
 
+  const { showToast } = useToast();
+  const [confirmingLogout, setConfirmingLogout] = useState(false);
+
+  useEffect(() => {
+    if (!confirmingLogout) return;
+
+    const timeout = window.setTimeout(() => setConfirmingLogout(false), 5000);
+    return () => window.clearTimeout(timeout);
+  }, [confirmingLogout]);
+
   const handleSignOut = async () => {
+    if (!confirmingLogout) {
+      showToast("Are you sure you want to logout? Click again to confirm.", "info");
+      setConfirmingLogout(true);
+      return;
+    }
+
     await signOut({ callbackUrl: "/login" });
   };
 
-  const firstName = session?.user?.firstName ?? "";
-  const lastName = session?.user?.lastName ?? "";
   const initials =
-    status === "authenticated"
-      ? `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase()
-      : "";
+    `${user.firstName?.[0] ?? ""}${user.lastName?.[0] ?? ""}`.toUpperCase() ||
+    "?";
 
   return (
     <>
@@ -144,7 +163,7 @@ export default function SideNav() {
               );
             })}
           </nav>
-          {session?.user?.role === "ADMIN" && (
+          {user.role === "ADMIN" && (
             <>
               <p className="mt-4 px-3 text-xs font-semibold uppercase tracking-wide text-gray-400">
                 Admin
@@ -176,16 +195,22 @@ export default function SideNav() {
 
           <div className="mt-4 border-t border-gray-200 pt-4">
             <div className="mb-3 flex items-center gap-3 rounded-lg bg-gray-50 px-3 py-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-sm font-semibold text-white">
-                {status === "loading" ? "…" : initials || "?"}
+              <div className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-sm font-semibold text-white">
+                {user.profileImageUrl ? (
+                  <Image
+                    src={user.profileImageUrl}
+                    alt={`${user.firstName} ${user.lastName}`}
+                    fill
+                    sizes="40px"
+                    className="object-cover"
+                  />
+                ) : (
+                  initials
+                )}
               </div>
               <div className="min-w-0">
                 <p className="truncate text-sm font-semibold text-gray-900">
-                  {status === "loading"
-                    ? "Loading..."
-                    : session?.user
-                      ? `${firstName} ${lastName}`
-                      : "Guest"}
+                  {user.firstName} {user.lastName}
                 </p>
                 <p className="text-xs text-gray-500">Member</p>
               </div>
@@ -220,10 +245,18 @@ export default function SideNav() {
               <button
                 type="button"
                 onClick={handleSignOut}
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-gray-900"
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition ${
+                  confirmingLogout
+                    ? "bg-red-50 text-red-600 hover:bg-red-100"
+                    : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                }`}
               >
-                <LogOutIcon className="h-5 w-5 shrink-0 text-gray-500" />
-                <span>Logout</span>
+                <LogOutIcon
+                  className={`h-5 w-5 shrink-0 ${
+                    confirmingLogout ? "text-red-600" : "text-gray-500"
+                  }`}
+                />
+                <span>{confirmingLogout ? "Confirm Logout" : "Logout"}</span>
               </button>
             </nav>
           </div>

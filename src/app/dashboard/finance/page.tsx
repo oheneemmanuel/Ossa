@@ -39,9 +39,7 @@ export default async function FinancePage() {
         <h1 className="text-2xl font-semibold text-[#111C3A] mt-8">
           Financial Overview
         </h1>
-        <p className="mt-1 text-sm text-[#5B6478]">
-          Track your contribution history, payments, and transaction records.
-        </p>
+     
       </div>
 
       {/* Summary Metric Cards */}

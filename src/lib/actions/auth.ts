@@ -3,112 +3,38 @@
 import bcrypt from "bcryptjs";
 import { Prisma } from "@prisma/client";
 import { db } from "@/lib/prisma";
-
-const ALLOWED_GENDERS = ["male", "female"];
+import { registerSchema } from "@/lib/validations/register";
 
 export async function createUserAccount(formData: FormData) {
   try {
     // -----------------------------
-    // Get form values
+    // Parse + validate all fields in one pass
     // -----------------------------
-    const firstName = formData.get("firstName")?.toString().trim() ?? "";
-    const lastName = formData.get("lastName")?.toString().trim() ?? "";
-    const email = formData.get("email")?.toString().trim().toLowerCase() ?? "";
-    const phone = formData.get("phone")?.toString().trim() ?? "";
-    const gender = formData.get("gender")?.toString().trim() ?? "";
-    const yearCompleted =
-      formData.get("yearCompleted")?.toString().trim() ?? "";
-    const location = formData.get("location")?.toString().trim() ?? "";
-    const password = formData.get("password")?.toString() ?? "";
-    const confirmPassword = formData.get("confirmPassword")?.toString() ?? "";
+    const raw = {
+      firstName: formData.get("firstName")?.toString() ?? "",
+      lastName: formData.get("lastName")?.toString() ?? "",
+      email: formData.get("email")?.toString() ?? "",
+      phone: formData.get("phone")?.toString() ?? "",
+      gender: formData.get("gender")?.toString() ?? "",
+      yearCompleted: formData.get("yearCompleted")?.toString() ?? "",
+      location: formData.get("location")?.toString() ?? "",
+      password: formData.get("password")?.toString() ?? "",
+      confirmPassword: formData.get("confirmPassword")?.toString() ?? "",
+    };
 
-    // -----------------------------
-    // Required fields
-    // -----------------------------
-    if (
-      !firstName ||
-      !lastName ||
-      !email ||
-      !phone ||
-      !gender ||
-      !yearCompleted ||
-      !location ||
-      !password ||
-      !confirmPassword
-    ) {
+    const parsed = registerSchema.safeParse(raw);
+
+    if (!parsed.success) {
+      // Surface the first validation error — same shape your form already expects
+      const firstError = parsed.error.issues[0]?.message ?? "Invalid input.";
       return {
         success: false,
-        error: "Please fill in all required fields.",
+        error: firstError,
       };
     }
 
-    // -----------------------------
-    // Email validation
-    // -----------------------------
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailRegex.test(email)) {
-      return {
-        success: false,
-        error: "Please enter a valid email address.",
-      };
-    }
-
-    // -----------------------------
-    // Phone validation (basic — adjust to your expected format)
-    // -----------------------------
-    const phoneRegex = /^[+]?[\d\s()-]{7,20}$/;
-
-    if (!phoneRegex.test(phone)) {
-      return {
-        success: false,
-        error: "Please enter a valid phone number.",
-      };
-    }
-
-    // -----------------------------
-    // Gender allow-list
-    // -----------------------------
-    if (!ALLOWED_GENDERS.includes(gender)) {
-      return {
-        success: false,
-        error: "Please select a valid gender.",
-      };
-    }
-
-    // -----------------------------
-    // Year completed validation
-    // -----------------------------
-    const yearNum = Number(yearCompleted);
-    const currentYear = new Date().getFullYear();
-
-    if (
-      !Number.isInteger(yearNum) ||
-      yearNum < 1970 ||
-      yearNum > currentYear + 1
-    ) {
-      return {
-        success: false,
-        error: "Please enter a valid completion year.",
-      };
-    }
-
-    // -----------------------------
-    // Password validation
-    // -----------------------------
-    if (password.length < 8) {
-      return {
-        success: false,
-        error: "Password must be at least 8 characters long.",
-      };
-    }
-
-    if (password !== confirmPassword) {
-      return {
-        success: false,
-        error: "Passwords do not match.",
-      };
-    }
+    const { firstName, lastName, email, phone, gender, yearCompleted, location, password } =
+      parsed.data;
 
     // -----------------------------
     // Hash password
@@ -127,7 +53,7 @@ export async function createUserAccount(formData: FormData) {
         email,
         phone,
         gender,
-        yearCompleted: yearNum,
+        yearCompleted,
         location,
         password: hashedPassword,
       },
@@ -171,4 +97,3 @@ export async function createUserAccount(formData: FormData) {
 }
 
 // Login is now handled by Auth.js — see src/auth.config.ts (Credentials provider, `authorize` callback).
-

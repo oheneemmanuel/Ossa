@@ -19,16 +19,22 @@ const members = [
   },
   {
     role: "Programs Lead",
-    name: "Patrick N. Gyamfi",
+    name: "Mr.Patrick N. Gyamfi",
     image: "/team/dangote.webp",
   },
+  {
+    role: "D.C and Organizer",
+    name: "Mr.Joshua Arhin",
+    image: "/team/dc.webp",
+  },
+
 ];
 
 export default function TeamPage() {
   return (
     <main className="min-h-screen bg-[#f7f5ef] px-4 py-10 text-slate-900 sm:px-6 sm:py-16">
       <div className="mx-auto max-w-5xl rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
-        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#f26419]">
+        <p className="text-lg font-semibold uppercase tracking-[0.3em] text-blue-500">
           About OSSA
         </p>
         <h1 className="mt-3 text-3xl font-semibold tracking-[0.02em] text-slate-950 sm:text-4xl">

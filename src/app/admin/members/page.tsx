@@ -48,6 +48,7 @@ export default function MembersPage() {
     } finally {
       setLoading(false);
     }
+    []
   }, [showToast]);
 
   useEffect(() => {
@@ -121,7 +122,7 @@ export default function MembersPage() {
           <Users className="h-5 w-5 text-blue-600" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-black">Members</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-black mt-9">Members</h1>
           <p className="text-sm text-slate-500">
             {loading ? "Loading..." : `${members.length} member${members.length === 1 ? "" : "s"}`}
           </p>

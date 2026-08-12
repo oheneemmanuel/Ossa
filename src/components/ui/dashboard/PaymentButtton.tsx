@@ -14,10 +14,16 @@ declare global {
 interface PaystackButtonProps {
   email: string;
   amount: number;
+  minAmount?: number;
   onSuccess?: (data: any) => void;
 }
 
-export default function PaystackButton({ email, amount, onSuccess }: PaystackButtonProps) {
+export default function PaystackButton({
+  email,
+  amount,
+  minAmount = 1,
+  onSuccess,
+}: PaystackButtonProps) {
   const [loading, setLoading] = useState(false);
 
   const payWithPaystack = () => {
@@ -25,16 +31,15 @@ export default function PaystackButton({ email, amount, onSuccess }: PaystackBut
       alert("Payment script not loaded yet, try again in a second.");
       return;
     }
-    if (!amount || amount <= 0) {
-      alert("Please enter a valid amount.");
+    if (!amount || amount < minAmount) {
+      alert(`Please enter an amount of at least GHS ${minAmount}.`);
       return;
     }
 
     setLoading(true);
 
     const handler = window.PaystackPop.setup({
-      key: process.env.
-      NEXT_PUBLIC_KEY,
+      key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
       email,
       amount: amount * 100,
       currency: "GHS",
@@ -58,7 +63,9 @@ export default function PaystackButton({ email, amount, onSuccess }: PaystackBut
       if (data.status === true && data.data.status === "success") {
         onSuccess?.(data.data);
       } else {
-        alert("Payment verification failed. If you were charged, contact support.");
+        alert(
+          "Payment verification failed. If you were charged, contact support.",
+        );
       }
     } catch (err) {
       console.error(err);
@@ -70,10 +77,13 @@ export default function PaystackButton({ email, amount, onSuccess }: PaystackBut
 
   return (
     <>
-      <Script src="https://js.paystack.co/v1/inline.js" strategy="afterInteractive" />
+      <Script
+        src="https://js.paystack.co/v1/inline.js"
+        strategy="afterInteractive"
+      />
       <button
         onClick={payWithPaystack}
-        disabled={loading || !amount}
+        disabled={loading || !amount || amount < minAmount}
         className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-[#B8935A] disabled:cursor-not-allowed disabled:bg-[#111C3A]/20 disabled:text-[#111C3A]/40"
       >
         {loading ? (

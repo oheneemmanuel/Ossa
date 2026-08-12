@@ -11,7 +11,7 @@ export default function Header() {
       name: "Education Hub",
       href: "#education-hub",
       subLinks: [
-        { name: "Our Projects", href: "/projects" },
+        { name: "Our Projects", href: "/events" },
         { name: "Events & Fairs", href: "/events" },
       ],
     },
@@ -26,6 +26,10 @@ export default function Header() {
         { name: "Photo Gallery", href: "/gallery" },
       ],
     },
+    {
+      name: 'Contact',
+      href :"/contact"
+    }
   ];
 
   const mobileNavLinks = [...desktopNavLinks, { name: "Sign In", href: "/login" }];
@@ -41,6 +45,8 @@ export default function Header() {
                 alt="OSSA Logo"
                 width={50}
                 height={50}
+                priority
+                
               />
             </div>
             <div>

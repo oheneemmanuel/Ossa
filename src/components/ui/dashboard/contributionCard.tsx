@@ -10,7 +10,8 @@ interface ContributionPaymentProps {
   email: string;
 }
 
-const PRESET_AMOUNTS = [10, 20, 30, 50];
+const PRESET_AMOUNTS = [20, 30, 50, 100]; // updated so all presets clear the 12 minimum
+const MIN_AMOUNT = 12;
 
 export default function ContributionPayment({
   email,
@@ -18,6 +19,8 @@ export default function ContributionPayment({
   const [amount, setAmount] = useState<number>(0);
   const [justPaid, setJustPaid] = useState(false);
   const router = useRouter();
+
+  const isBelowMinimum = amount > 0 && amount < MIN_AMOUNT;
 
   const handleSuccess = () => {
     setJustPaid(true);
@@ -98,19 +101,30 @@ export default function ContributionPayment({
           <label className="block text-xs font-medium uppercase tracking-wider text-black">
             Or Enter Custom Amount
           </label>
-          <div className="mt-1.5 flex items-center rounded-xl border border-[#111C3A]/15 bg-[#F7F5F1]/40 px-3.5 py-2.5 focus-within:border-[#111C3A] focus-within:bg-white focus-within:ring-2 focus-within:ring-[#111C3A]/10 transition-all">
+          <div
+            className={`mt-1.5 flex items-center rounded-xl border bg-[#F7F5F1]/40 px-3.5 py-2.5 focus-within:bg-white focus-within:ring-2 transition-all ${
+              isBelowMinimum
+                ? "border-red-400 focus-within:border-red-500 focus-within:ring-red-500/10"
+                : "border-[#111C3A]/15 focus-within:border-[#111C3A] focus-within:ring-[#111C3A]/10"
+            }`}
+          >
             <span className="text-sm font-semibold text-[#5B6478] pr-2 border-r border-[#111C3A]/10">
               GHS
             </span>
             <input
               type="number"
-              min={1}
+              min={MIN_AMOUNT}
               placeholder="0.00"
               value={amount || ""}
               onChange={(e) => setAmount(Number(e.target.value))}
               className="w-full bg-transparent pl-3 font-semibold text-lg text-[#111C3A] placeholder:text-[#111C3A]/30 focus:outline-none tabular-nums"
             />
           </div>
+          {isBelowMinimum && (
+            <p className="mt-1.5 text-xs font-medium text-red-500">
+              Minimum contribution is GHS {MIN_AMOUNT}.
+            </p>
+          )}
         </div>
 
         {/* Security / Account notice */}
@@ -125,6 +139,7 @@ export default function ContributionPayment({
           <PaystackButton
             email={email}
             amount={amount}
+            minAmount={MIN_AMOUNT}
             onSuccess={handleSuccess}
           />
         </div>

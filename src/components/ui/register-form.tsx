@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createUserAccount } from "@/lib/actions/auth";
+import { registerSchema } from "@/lib/validations/register";
 import { useToast } from "@/components/providers/ToastProvider";
 
 import {
@@ -54,17 +55,13 @@ export default function RegisterForm() {
     setSuccessMessage("");
 
     // Client-side validation
-    if (formData.password !== formData.confirmPassword) {
-      const err = "Passwords do not match.";
-      setErrorMessage(err);
-      showToast(err, "error");
-      return;
-    }
+    const parsed = registerSchema.safeParse(formData);
 
-    if (formData.password.length < 8) {
-      const err = "Password must be at least 8 characters long.";
-      setErrorMessage(err);
-      showToast(err, "error");
+    if (!parsed.success) {
+      const firstError =
+        parsed.error.issues[0]?.message ?? "Please check your input.";
+      setErrorMessage(firstError);
+      showToast(firstError, "error");
       return;
     }
 
