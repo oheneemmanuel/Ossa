@@ -29,7 +29,7 @@ const defaultAnnouncements: Announcement[] = [
   {
     id: '2',
     title: 'Maintenance Notice',
-    message: 'Scheduled system maintenance on Sunday at 2:00 AM UTC.',
+    message: 'system undergoing maintainance, we need your feedback to improve the workflow.',
     date: '2 hours ago',
     type: 'warning',
     read: false,

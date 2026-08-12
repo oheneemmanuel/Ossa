@@ -11,6 +11,7 @@ type Props = {
 
 export default function ProfileImageUpload({
   currentImageUrl,
+  fallbackInitials,
   onUploaded,
 }: Props) {
   const [preview, setPreview] = useState<string | null>(currentImageUrl ?? null);
@@ -83,7 +84,7 @@ export default function ProfileImageUpload({
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-xs text-neutral-500">
-            Add photo
+            {fallbackInitials || "U"}
           </div>
         )}
 

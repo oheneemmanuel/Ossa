@@ -10,7 +10,7 @@ import {
   LayoutDashboard,
   PiggyBank,
   Settings,
-  Users,
+
   LogOutIcon,
   UserCheck2Icon,
   Menu,
@@ -25,7 +25,7 @@ const links = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Finance", href: "/dashboard/finance", icon: PiggyBank },
   { name: "Settings", href: "/dashboard/settings", icon: Settings },
-  { name: "Team", href: "/dashboard/team", icon: Users },
+ 
 ];
 const adminLinks = [
   { name: "Reset Requests", href: "/admin/reset-requests", icon: KeyRound },

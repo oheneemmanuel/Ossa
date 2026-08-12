@@ -37,13 +37,13 @@ export default function DeleteAccountButton() {
   return (
     <>
       {/* Danger Zone Panel */}
-      <div className="rounded-xl border border-red-200 bg-red-50/50 p-6 dark:border-red-900/50 dark:bg-red-950/20">
+      <div className="rounded-xl border border-red-200 bg-red-50/50 p-6 ">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-1">
-            <h3 className="text-base font-semibold text-red-900 dark:text-red-200">
+            <h3 className="text-base font-semibold text-red-900 ">
               Delete Account
             </h3>
-            <p className="text-sm text-red-700/80 dark:text-red-400/80">
+            <p className="text-sm text-black ">
               Permanently delete your account and all associated data. This
               action cannot be undone.
             </p>
