@@ -49,7 +49,11 @@ export default async function SettingsPage() {
       </div>
 
       {/* User Quick Overview Card */}
-      <div className="flex items-center gap-4 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+      <div className="relative flex items-center gap-4 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+        <span className="absolute right-4 top-4 inline-flex shrink-0 items-center rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20">
+          Active Account
+        </span>
+
         <ProfileImageUpload
           currentImageUrl={user.profileImageUrl}
           fallbackInitials={initials}
@@ -58,10 +62,10 @@ export default async function SettingsPage() {
             await updateProfileImage(url);
           }}
         />
-        <div className="min-w-0 flex-1 w-full text-center sm:text-left">
+        <div className="min-w-0 flex-1 w-full pt-6 text-center sm:pt-0 sm:text-left">
           <h2 className="text-lg font-semibold text-zinc-900">
             {/* 1. Initials ONLY on mobile screens (hidden on sm and above) */}
-            <span className="sm:hidden">{initials}</span>
+            <span className="sm:hidden">{user.firstName} {user.lastName}</span>
 
             {/* 2. Full Name ONLY on sm screens and larger */}
             <span className="hidden sm:inline truncate">
@@ -73,9 +77,6 @@ export default async function SettingsPage() {
             {user.email}
           </p>
         </div>
-        <span className="inline-flex shrink-0 items-center rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20">
-          Active Account
-        </span>
       </div>
 
       {/* Profile Form Section */}

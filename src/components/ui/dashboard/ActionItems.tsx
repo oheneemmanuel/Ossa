@@ -5,9 +5,10 @@ import ContributionPayment from "@/components/ui/dashboard/contributionCard";
 
 interface ActionItemsProps {
   email: string;
+  projectName: string;
 }
 
-export default function ActionItems({ email }: ActionItemsProps) {
+export default function ActionItems({ email, projectName }: ActionItemsProps) {
   return (
     <section>
       <div className="mb-3 flex items-center gap-2">
@@ -18,7 +19,7 @@ export default function ActionItems({ email }: ActionItemsProps) {
       </div>
 
       <div className="space-y-4">
-        <ContributionPayment email={email} />
+        <ContributionPayment email={email} projectName={projectName} />
         {/* Future action items (profile completion, verification, etc.)
             go here as additional sibling cards */}
       </div>

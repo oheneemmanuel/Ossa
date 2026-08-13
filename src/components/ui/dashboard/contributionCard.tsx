@@ -8,13 +8,15 @@ import { CheckCircle2, Landmark, ShieldCheck, Sparkles } from "lucide-react";
 
 interface ContributionPaymentProps {
   email: string;
+  projectName: string;
 }
 
-const PRESET_AMOUNTS = [20, 30, 50, 100]; // updated so all presets clear the 12 minimum
+const PRESET_AMOUNTS = [20, 30, 50, 100];
 const MIN_AMOUNT = 12;
 
 export default function ContributionPayment({
   email,
+  projectName,
 }: ContributionPaymentProps) {
   const [amount, setAmount] = useState<number>(0);
   const [justPaid, setJustPaid] = useState(false);
@@ -63,7 +65,7 @@ export default function ContributionPayment({
             <h3 className="text-sm font-semibold text-[#111C3A]">
               Make a Contribution
             </h3>
-            <p className="text-xs text-[#5B6478]">Direct member payment</p>
+            <p className="text-xs text-[#5B6478]">Supporting: {projectName}</p>
           </div>
         </div>
 

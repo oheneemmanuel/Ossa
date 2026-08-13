@@ -20,6 +20,15 @@ export async function recordContribution(data: PaystackChargeData) {
     return { recorded: false, reason: "no_user" };
   }
 
+  const activeProject = await db.project.findFirst({
+    where: { isActive: true },
+  });
+
+  if (!activeProject) {
+    console.error("No active project found for contribution:", reference);
+    return { recorded: false, reason: "no_active_project" };
+  }
+
   await db.contribution.upsert({
     where: { reference },
     update: { status },
@@ -28,6 +37,7 @@ export async function recordContribution(data: PaystackChargeData) {
       amount,
       status,
       userId: user.id,
+      projectId: activeProject.id,
     },
   });
 
@@ -35,6 +45,7 @@ export async function recordContribution(data: PaystackChargeData) {
     reference,
     amount,
     email: customer.email,
+    project: activeProject.name,
   });
   return { recorded: true };
 }

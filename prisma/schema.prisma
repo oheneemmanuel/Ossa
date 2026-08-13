@@ -33,6 +33,8 @@ model User {
   updatedAt     DateTime @updatedAt
   contributions Contribution[]
   resetTokens PasswordResetToken[]
+  failedLoginAttempts Int @default(0)
+  lockedUntil DateTime?
 }
 
 model Contribution {
@@ -44,6 +46,8 @@ model Contribution {
 
   userId String 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectId String
+  project Project @relation(fields: [projectId], references: [id])
 }
 
 model PasswordResetToken {
@@ -56,4 +60,13 @@ model PasswordResetToken {
 
   @@index([userId])
 
+}
+
+model Project {
+  id String @id @default(cuid())
+  name String
+  description String?
+  isActive Boolean @default(true)
+  createdAt DateTime @default(now())
+  contributions Contribution[]
 }

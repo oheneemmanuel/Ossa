@@ -18,7 +18,6 @@ export default async function DashboardPage() {
   }
   console.log(session?.user?.role);
 
-
   // Fetch the real, current user record instead of trusting the session snapshot —
   // the session's firstName/lastName can go stale after a settings update.
   const user = await db.user.findUnique({
@@ -34,14 +33,21 @@ export default async function DashboardPage() {
     orderBy: { createdAt: "desc" },
   });
 
+  const activeProject = await db.project.findFirst({
+    where: { isActive: true },
+  });
+
   const totalPesewas = contributions.reduce((sum, c) => sum + c.amount, 0);
   const amountContributed = totalPesewas / 100;
-  const lastContributionDate = contributions[0]?.createdAt.toISOString().split("T")[0] ?? null;
+  const lastContributionDate =
+    contributions[0]?.createdAt.toISOString().split("T")[0] ?? null;
 
-  const initials = `${user.firstName?.[0] || ""}${user.lastName?.[0] || ""}`.toUpperCase() || "U";
+  const initials =
+    `${user.firstName?.[0] || ""}${user.lastName?.[0] || ""}`.toUpperCase() ||
+    "U";
 
   await new Promise((resolve) => setTimeout(resolve, 2000));
-  
+
   return (
     <div className="min-h-screen bg-[#F7F5F1]">
       <main className="mx-auto max-w-6xl px-6 py-8">
@@ -83,13 +89,18 @@ export default async function DashboardPage() {
           <ContributionCard
             memberName={`${user.firstName} ${user.lastName}`}
             amountContributed={amountContributed}
-            lastContributionDate={lastContributionDate ?? "No contributions yet"}
+            lastContributionDate={
+              lastContributionDate ?? "No contributions yet"
+            }
           />
         </div>
 
         {/* Action items — its own full-width section */}
         <div className="mt-8">
-          <ActionItems email={user.email} />
+          <ActionItems
+            email={user.email}
+            projectName={activeProject?.name ?? "General Fund"}
+          />
         </div>
 
         {/* Recent activity — its own full-width section */}
