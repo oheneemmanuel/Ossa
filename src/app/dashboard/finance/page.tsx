@@ -11,9 +11,10 @@ export default async function FinancePage() {
     redirect("/login");
   }
 
-  // Fetch all transactions for the current user
+  // Fetch all transactions for the current user, including which project each belongs to
   const contributions = await db.contribution.findMany({
     where: { user: { email: session.user.email } },
+    include: { project: true },
     orderBy: { createdAt: "desc" },
   });
 
@@ -31,6 +32,22 @@ export default async function FinancePage() {
   const averagePesewas =
     successfulCount > 0 ? totalPesewas / successfulCount : 0;
   const averageContribution = averagePesewas / 100;
+
+  // Group successful contributions by project
+  const byProject = contributions.reduce((acc, c) => {
+    if (c.status.toLowerCase() !== "success") return acc;
+    const key = c.projectId;
+    if (!acc[key]) {
+      acc[key] = { projectName: c.project.name, totalPesewas: 0, count: 0 };
+    }
+    acc[key].totalPesewas += c.amount;
+    acc[key].count += 1;
+    return acc;
+  }, {} as Record<string, { projectName: string; totalPesewas: number; count: number }>);
+
+  const projectBreakdown = Object.values(byProject).sort(
+    (a, b) => b.totalPesewas - a.totalPesewas
+  );
 
   return (
     <div className="mx-auto max-w-6xl space-y-8">
@@ -74,6 +91,33 @@ export default async function FinancePage() {
           <p className="mt-1 text-xs text-[#5B6478]">Per completed payment</p>
         </div>
       </div>
+
+      {/* Per-Project Breakdown */}
+      {projectBreakdown.length > 0 && (
+        <div className="rounded-2xl border border-[#111C3A]/10 bg-white p-6 shadow-sm">
+          <h2 className="text-sm font-semibold text-[#111C3A] mb-4">
+            Contributions by Project
+          </h2>
+          <div className="space-y-3">
+            {projectBreakdown.map((p) => (
+              <div
+                key={p.projectName}
+                className="flex items-center justify-between rounded-xl bg-[#F7F5F1]/60 px-4 py-3"
+              >
+                <div>
+                  <p className="text-sm font-medium text-[#111C3A]">{p.projectName}</p>
+                  <p className="text-xs text-[#5B6478]">
+                    {p.count} payment{p.count === 1 ? "" : "s"}
+                  </p>
+                </div>
+                <p className="text-sm font-semibold text-[#111C3A]">
+                  GHS {(p.totalPesewas / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Client Component with Search & Filterable Table */}
       <FinanceClient contributions={contributions} />

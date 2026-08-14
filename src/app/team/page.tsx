@@ -13,6 +13,12 @@ const members = [
     image: "/team/vice.webp",
   },
   {
+    role: "Chairman",
+    name: "Mr. Evans Ketu",
+    image: "/team/dennis.webp",
+  },
+
+  {
     role: "Secretary",
     name: "Mr. Dennis K. Lartey",
     image: "/team/dennis.webp",
@@ -27,7 +33,21 @@ const members = [
     name: "Mr.Joshua Arhin",
     image: "/team/dc.webp",
   },
-
+  {
+    role: "Secretary",
+    name: "Mad.Naomi Amanianpon",
+    image: "/team/dennis.webp",
+  },
+  {
+    role: "Organizer",
+    name: "Mad.Gyamfua Princess",
+    image: "/team/dennis.webp",
+  },
+  {
+    role: "Project Manager",
+    name: "Mr.Ansah Samuel",
+    image: "/team/dennis.webp",
+  },
 ];
 
 export default function TeamPage() {

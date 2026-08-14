@@ -12,10 +12,12 @@ export async function GET(req: NextRequest) {
 
   const status = req.nextUrl.searchParams.get("status") ?? "all";
   const search = req.nextUrl.searchParams.get("search")?.trim() ?? "";
+  const projectId = req.nextUrl.searchParams.get("projectId") ?? "all";
 
   const contributions = await db.contribution.findMany({
     where: {
       ...(status !== "all" && { status }),
+      ...(projectId !== "all" && { projectId }),
       ...(search && {
         user: {
           OR: [
@@ -32,6 +34,7 @@ export async function GET(req: NextRequest) {
       amount: true,
       status: true,
       createdAt: true,
+      project: { select: { id: true, name: true } },
       user: {
         select: { id: true, firstName: true, lastName: true, email: true },
       },

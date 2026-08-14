@@ -1,8 +1,8 @@
 import { auth } from "@/auth.config";
 import { redirect } from "next/navigation";
-import MembersTable from "@/components/ui/admin/MembersTable";
+import ProjectsTable from "@/components/ui/admin/ProjectsTable";
 
-export default async function MembersPage() {
+export default async function ProjectsPage() {
   const session = await auth();
 
   if (!session?.user) {
@@ -13,5 +13,5 @@ export default async function MembersPage() {
     redirect("/dashboard");
   }
 
-  return <MembersTable />;
+  return <ProjectsTable />;
 }

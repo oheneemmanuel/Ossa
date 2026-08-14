@@ -18,6 +18,7 @@ import {
   ShieldCheck,
   KeyRound,
   Wallet,
+  Package
 } from "lucide-react";
 
 const links = [
@@ -31,6 +32,7 @@ const adminLinks = [
   { name: "Reset Requests", href: "/admin/reset-requests", icon: KeyRound },
   { name: "Members", href: "/admin/members", icon: ShieldCheck },
   { name: "Finance (Admin)", href: "/admin/finance", icon: Wallet },
+  {name: "Project Management", href:"/admin/projects", icon:Package },
 ];
 
 const accountLinks = [

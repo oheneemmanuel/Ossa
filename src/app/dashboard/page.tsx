@@ -37,10 +37,20 @@ export default async function DashboardPage() {
     where: { isActive: true },
   });
 
-  const totalPesewas = contributions.reduce((sum, c) => sum + c.amount, 0);
+  // Only count contributions toward the currently active project —
+  // this is what resets each user's total to 0 when a new project starts.
+  const activeProjectContributions = contributions.filter(
+    (c) => c.projectId === activeProject?.id,
+  );
+
+  const totalPesewas = activeProjectContributions.reduce(
+    (sum, c) => sum + c.amount,
+    0,
+  );
   const amountContributed = totalPesewas / 100;
   const lastContributionDate =
-    contributions[0]?.createdAt.toISOString().split("T")[0] ?? null;
+    activeProjectContributions[0]?.createdAt.toISOString().split("T")[0] ??
+    null;
 
   const initials =
     `${user.firstName?.[0] || ""}${user.lastName?.[0] || ""}`.toUpperCase() ||
