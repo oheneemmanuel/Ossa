@@ -15,7 +15,7 @@ const members = [
   {
     role: "Chairman",
     name: "Mr. Evans Ketu",
-    image: "/team/dennis.webp",
+    image: "/team/image.png",
   },
 
   {
@@ -36,17 +36,17 @@ const members = [
   {
     role: "Secretary",
     name: "Mad.Naomi Amanianpon",
-    image: "/team/dennis.webp",
+    image: "/team/naomi.webp",
   },
   {
     role: "Organizer",
     name: "Mad.Gyamfua Princess",
-    image: "/team/dennis.webp",
+    image: "/team/image.png",
   },
   {
     role: "Project Manager",
     name: "Mr.Ansah Samuel",
-    image: "/team/dennis.webp",
+    image: "/team/shadow.webp",
   },
 ];
 
@@ -77,7 +77,7 @@ export default function TeamPage() {
                   alt={`${member.role} portrait`}
                   fill
                   className="object-cover"
-                  sizes="100vw"
+                  sizes="200px"
                 />
               </div>
               <div className="p-3 sm:p-3.5">
