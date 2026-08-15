@@ -81,20 +81,23 @@ export default function PaystackButton({
         src="https://js.paystack.co/v1/inline.js"
         strategy="afterInteractive"
       />
-      <button
-        onClick={payWithPaystack}
-        disabled={loading || !amount || amount < minAmount}
-        className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-[#B8935A] disabled:cursor-not-allowed disabled:bg-[#111C3A]/20 disabled:text-[#111C3A]/40"
-      >
-        {loading ? (
-          <>
-            <Loader2 className="h-4 w-4 animate-spin" />
-            Processing
-          </>
-        ) : (
-          "Confirm & Pay"
-        )}
-      </button>
+      <form onSubmit={(e) => e.preventDefault()}>
+        <button
+          type="button"
+          onClick={payWithPaystack}
+          disabled={loading || !amount || amount < minAmount}
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-[#B8935A] disabled:cursor-not-allowed disabled:bg-[#111C3A]/20 disabled:text-[#111C3A]/40"
+        >
+          {loading ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              Processing
+            </>
+          ) : (
+            "Confirm & Pay"
+          )}
+        </button>
+      </form>
     </>
   );
 }

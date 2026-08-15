@@ -25,7 +25,7 @@ const nextConfig: NextConfig = {
             value: [
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' https://js.paystack.co",
-              "style-src 'self' 'unsafe-inline'",
+              "style-src 'self' 'unsafe-inline' https://paystack.com https://checkout.paystack.com",
               "img-src 'self' res.cloudinary.com data: blob:",
               "font-src 'self'",
               "connect-src 'self' https://api.paystack.co https://standard.paystack.co",

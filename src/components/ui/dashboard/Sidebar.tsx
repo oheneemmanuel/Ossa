@@ -214,7 +214,7 @@ export default function Sidebar({ user }: { user: SidebarUser }) {
                 <p className="truncate text-sm font-semibold text-gray-900">
                   {user.firstName} {user.lastName}
                 </p>
-                <p className="text-xs text-gray-500">Member</p>
+                <p className="text-xs text-gray-500">{user.role}</p>
               </div>
             </div>
 

@@ -16,7 +16,7 @@ export default async function DashboardPage() {
   if (!session.user.email) {
     redirect("/login");
   }
-  console.log(session?.user?.role);
+  
 
   // Fetch the real, current user record instead of trusting the session snapshot —
   // the session's firstName/lastName can go stale after a settings update.
