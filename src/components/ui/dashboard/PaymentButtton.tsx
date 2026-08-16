@@ -1,4 +1,3 @@
-// components/ui/dashboard/PaymentButtton.tsx
 "use client";
 
 import Script from "next/script";
@@ -27,10 +26,26 @@ export default function PaystackButton({
   const [loading, setLoading] = useState(false);
 
   const payWithPaystack = () => {
-    if (!window.PaystackPop) {
-      alert("Payment script not loaded yet, try again in a second.");
+    const publicKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY;
+
+    // 1. Guard check for missing environment variable
+    if (!publicKey) {
+      alert("Paystack Public Key is missing. Check your .env.local file.");
       return;
     }
+
+    // 2. Guard check for script availability
+    if (!window.PaystackPop) {
+      alert("Payment gateway is loading. Please try again in a moment.");
+      return;
+    }
+
+    // 3. Guard check for email and amount
+    if (!email || !email.includes("@")) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
     if (!amount || amount < minAmount) {
       alert(`Please enter an amount of at least GHS ${minAmount}.`);
       return;
@@ -38,21 +53,32 @@ export default function PaystackButton({
 
     setLoading(true);
 
-    const handler = window.PaystackPop.setup({
-      key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
-      email,
-      amount: amount * 100,
-      currency: "GHS",
-      ref: `ossa_${Date.now()}_${Math.floor(Math.random() * 1000000)}`,
-      callback: function (response: { reference: string }) {
-        verifyPayment(response.reference);
-      },
-      onClose: function () {
-        setLoading(false);
-      },
-    });
+    try {
+      // Initialize modern v2 PaystackPop instance
+      const paystack = new window.PaystackPop();
 
-    handler.openIframe();
+      paystack.newTransaction({
+        key: publicKey,
+        email: email.trim(),
+        amount: Math.round(amount * 100), // Ensures strictly integer pesewas/subunits
+        currency: "GHS",
+        reference: `ossa_${Date.now()}_${Math.floor(Math.random() * 1000000)}`,
+        onSuccess: (transaction: { reference: string }) => {
+          verifyPayment(transaction.reference);
+        },
+        onCancel: () => {
+          setLoading(false);
+        },
+        onError: (error: any) => {
+          console.error("Paystack popup error:", error);
+          alert("Could not initialize transaction. Check developer console.");
+          setLoading(false);
+        },
+      });
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+    }
   };
 
   const verifyPayment = async (reference: string) => {
@@ -60,11 +86,11 @@ export default function PaystackButton({
       const res = await fetch(`/api/paystack/verify?reference=${reference}`);
       const data = await res.json();
 
-      if (data.status === true && data.data.status === "success") {
+      if (data.status === true && data.data?.status === "success") {
         onSuccess?.(data.data);
       } else {
         alert(
-          "Payment verification failed. If you were charged, contact support.",
+          "Payment verification failed. If charged, please contact support.",
         );
       }
     } catch (err) {
@@ -78,26 +104,24 @@ export default function PaystackButton({
   return (
     <>
       <Script
-        src="https://js.paystack.co/v1/inline.js"
+        src="https://js.paystack.co/v2/inline.js"
         strategy="afterInteractive"
       />
-      <form onSubmit={(e) => e.preventDefault()}>
-        <button
-          type="button"
-          onClick={payWithPaystack}
-          disabled={loading || !amount || amount < minAmount}
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-[#B8935A] disabled:cursor-not-allowed disabled:bg-[#111C3A]/20 disabled:text-[#111C3A]/40"
-        >
-          {loading ? (
-            <>
-              <Loader2 className="h-4 w-4 animate-spin" />
-              Processing
-            </>
-          ) : (
-            "Confirm & Pay"
-          )}
-        </button>
-      </form>
+      <button
+        type="button"
+        onClick={payWithPaystack}
+        disabled={loading || !amount || amount < minAmount}
+        className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-[#B8935A] disabled:cursor-not-allowed disabled:bg-[#111C3A]/20 disabled:text-[#111C3A]/40"
+      >
+        {loading ? (
+          <>
+            <Loader2 className="h-4 w-4 animate-spin" />
+            Processing
+          </>
+        ) : (
+          "Confirm & Pay"
+        )}
+      </button>
     </>
   );
 }
