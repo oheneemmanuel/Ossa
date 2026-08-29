@@ -82,3 +82,43 @@ export async function DELETE(
     return NextResponse.json({ error: "Failed to delete member" }, { status: 500 });
   }
 }
+
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  const session = await auth();
+
+  if (!session?.user || session.user.role !== "ADMIN") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+  }
+
+  try {
+    const member = await db.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        phone: true,
+        gender: true,
+        yearCompleted: true,
+        location: true,
+        role: true,
+        createdAt: true,
+        profileImageUrl: true,
+        // add any other fields you want on the profile page
+      },
+    });
+
+    if (!member) {
+      return NextResponse.json({ error: "Member not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ member });
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to fetch member" }, { status: 500 });
+  }
+}

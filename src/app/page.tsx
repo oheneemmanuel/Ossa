@@ -97,7 +97,7 @@ export default function Home() {
               </p>
             </div>
             <h2 className="text-xl font-black uppercase tracking-tight text-slate-950">
-              Active school lab infrastructure development.
+              Supporting Audio Visual.
             </h2>
             <ul className="mt-4 space-y-3 text-sm font-bold text-slate-700">
               <li className="flex items-center gap-2">

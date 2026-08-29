@@ -1,15 +1,8 @@
 "use client";
+import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import { useToast } from "@/components/providers/ToastProvider";
-import {
-  Search,
-  Pencil,
-  Trash2,
-  X,
-  Check,
-  Loader2,
-  Users,
-} from "lucide-react";
+import { Search, Pencil, Trash2, X, Check, Loader2, Users } from "lucide-react";
 
 type Member = {
   id: string;
@@ -22,6 +15,7 @@ type Member = {
   location: string;
   role: "MEMBER" | "ADMIN";
   createdAt: string;
+  profileImageUrl: string | null;
 };
 
 export default function MembersTable() {
@@ -35,19 +29,27 @@ export default function MembersTable() {
   const [deleting, setDeleting] = useState(false);
   const { showToast } = useToast();
 
-  const fetchMembers = useCallback(async (query: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`/api/admin/members?search=${encodeURIComponent(query)}`);
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to load members");
-      setMembers(data.members);
-    } catch (err) {
-      showToast(err instanceof Error ? err.message : "Failed to load members", "error");
-    } finally {
-      setLoading(false);
-    }
-  }, [showToast]);
+  const fetchMembers = useCallback(
+    async (query: string) => {
+      setLoading(true);
+      try {
+        const res = await fetch(
+          `/api/admin/members?search=${encodeURIComponent(query)}`,
+        );
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Failed to load members");
+        setMembers(data.members);
+      } catch (err) {
+        showToast(
+          err instanceof Error ? err.message : "Failed to load members",
+          "error",
+        );
+      } finally {
+        setLoading(false);
+      }
+    },
+    [showToast],
+  );
 
   useEffect(() => {
     const timeout = setTimeout(() => fetchMembers(search), 350);
@@ -120,9 +122,13 @@ export default function MembersTable() {
           <Users className="h-5 w-5 text-blue-600" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-black mt-9">Members</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-black mt-9">
+            Members
+          </h1>
           <p className="text-sm text-slate-500">
-            {loading ? "Loading..." : `${members.length} member${members.length === 1 ? "" : "s"}`}
+            {loading
+              ? "Loading..."
+              : `${members.length} member${members.length === 1 ? "" : "s"}`}
           </p>
         </div>
       </div>
@@ -155,13 +161,19 @@ export default function MembersTable() {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={6} className="px-4 py-10 text-center text-slate-400">
+                <td
+                  colSpan={6}
+                  className="px-4 py-10 text-center text-slate-400"
+                >
                   <Loader2 className="mx-auto h-5 w-5 animate-spin" />
                 </td>
               </tr>
             ) : members.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-4 py-10 text-center text-slate-400">
+                <td
+                  colSpan={6}
+                  className="px-4 py-10 text-center text-slate-400"
+                >
                   No members found.
                 </td>
               </tr>
@@ -169,19 +181,32 @@ export default function MembersTable() {
               members.map((member) => {
                 const isEditing = editingId === member.id;
                 return (
-                  <tr key={member.id} className="border-b border-slate-50 last:border-0">
+                  <tr
+                    key={member.id}
+                    className="border-b border-slate-50 last:border-0"
+                  >
                     {isEditing ? (
                       <>
                         <td className="px-4 py-2.5">
                           <div className="flex gap-1.5">
                             <input
                               value={editForm.firstName ?? ""}
-                              onChange={(e) => setEditForm((f) => ({ ...f, firstName: e.target.value }))}
+                              onChange={(e) =>
+                                setEditForm((f) => ({
+                                  ...f,
+                                  firstName: e.target.value,
+                                }))
+                              }
                               className="w-20 rounded-lg border border-slate-200 px-2 py-1 text-sm text-black focus:border-blue-600 focus:outline-none"
                             />
                             <input
                               value={editForm.lastName ?? ""}
-                              onChange={(e) => setEditForm((f) => ({ ...f, lastName: e.target.value }))}
+                              onChange={(e) =>
+                                setEditForm((f) => ({
+                                  ...f,
+                                  lastName: e.target.value,
+                                }))
+                              }
                               className="w-20 rounded-lg border border-slate-200 px-2 py-1 text-sm text-black focus:border-blue-600 focus:outline-none"
                             />
                           </div>
@@ -189,21 +214,36 @@ export default function MembersTable() {
                         <td className="px-4 py-2.5">
                           <input
                             value={editForm.email ?? ""}
-                            onChange={(e) => setEditForm((f) => ({ ...f, email: e.target.value }))}
+                            onChange={(e) =>
+                              setEditForm((f) => ({
+                                ...f,
+                                email: e.target.value,
+                              }))
+                            }
                             className="w-full rounded-lg border border-slate-200 px-2 py-1 text-sm text-black focus:border-blue-600 focus:outline-none"
                           />
                         </td>
                         <td className="px-4 py-2.5">
                           <input
                             value={editForm.phone ?? ""}
-                            onChange={(e) => setEditForm((f) => ({ ...f, phone: e.target.value }))}
+                            onChange={(e) =>
+                              setEditForm((f) => ({
+                                ...f,
+                                phone: e.target.value,
+                              }))
+                            }
                             className="w-full rounded-lg border border-slate-200 px-2 py-1 text-sm text-black focus:border-blue-600 focus:outline-none"
                           />
                         </td>
                         <td className="px-4 py-2.5">
                           <input
                             value={editForm.location ?? ""}
-                            onChange={(e) => setEditForm((f) => ({ ...f, location: e.target.value }))}
+                            onChange={(e) =>
+                              setEditForm((f) => ({
+                                ...f,
+                                location: e.target.value,
+                              }))
+                            }
                             className="w-full rounded-lg border border-slate-200 px-2 py-1 text-sm text-black focus:border-blue-600 focus:outline-none"
                           />
                         </td>
@@ -211,7 +251,10 @@ export default function MembersTable() {
                           <select
                             value={editForm.role ?? "MEMBER"}
                             onChange={(e) =>
-                              setEditForm((f) => ({ ...f, role: e.target.value as Member["role"] }))
+                              setEditForm((f) => ({
+                                ...f,
+                                role: e.target.value as Member["role"],
+                              }))
                             }
                             className="rounded-lg border border-slate-200 px-2 py-1 text-sm text-black focus:border-blue-600 focus:outline-none"
                           >
@@ -244,11 +287,22 @@ export default function MembersTable() {
                     ) : (
                       <>
                         <td className="px-4 py-3 font-medium text-black">
-                          {member.firstName} {member.lastName}
+                          <Link
+                            href={`/admin/members/${member.id}`}
+                            className="hover:text-blue-600 hover:underline"
+                          >
+                            {member.firstName} {member.lastName}
+                          </Link>
                         </td>
-                        <td className="px-4 py-3 text-slate-600">{member.email}</td>
-                        <td className="px-4 py-3 text-slate-600">{member.phone}</td>
-                        <td className="px-4 py-3 text-slate-600">{member.location}</td>
+                        <td className="px-4 py-3 text-slate-600">
+                          {member.email}
+                        </td>
+                        <td className="px-4 py-3 text-slate-600">
+                          {member.phone}
+                        </td>
+                        <td className="px-4 py-3 text-slate-600">
+                          {member.location}
+                        </td>
                         <td className="px-4 py-3">
                           <span
                             className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${
@@ -289,7 +343,9 @@ export default function MembersTable() {
       {deleteTarget && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
           <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl">
-            <h2 className="text-lg font-semibold text-black mb-1.5">Remove member?</h2>
+            <h2 className="text-lg font-semibold text-black mb-1.5">
+              Remove member?
+            </h2>
             <p className="text-sm text-slate-500 mb-6">
               This will permanently remove{" "}
               <span className="font-medium text-black">
@@ -309,7 +365,11 @@ export default function MembersTable() {
                 disabled={deleting}
                 className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-rose-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-rose-700 disabled:opacity-60"
               >
-                {deleting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Remove"}
+                {deleting ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  "Remove"
+                )}
               </button>
             </div>
           </div>

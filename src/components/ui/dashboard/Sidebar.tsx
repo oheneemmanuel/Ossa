@@ -15,7 +15,7 @@ import {
   UserCheck2Icon,
   Menu,
   X,
-  ShieldCheck,
+  Users,
   KeyRound,
   Wallet,
   Package
@@ -30,7 +30,7 @@ const links = [
 ];
 const adminLinks = [
   { name: "Reset Requests", href: "/admin/reset-requests", icon: KeyRound },
-  { name: "Members", href: "/admin/members", icon: ShieldCheck },
+  { name: "Members", href: "/admin/members", icon: Users },
   { name: "Finance (Admin)", href: "/admin/finance", icon: Wallet },
   {name: "Project Management", href:"/admin/projects", icon:Package },
 ];

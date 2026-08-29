@@ -11,6 +11,22 @@ export const passwordSchema = z
   .regex(/[0-9]/, "Password must include a number")
   .regex(/[^a-zA-Z0-9]/, "Password must include a special character");
 
+// Location must look like a real place name: letters, spaces, commas, hyphens, apostrophes, periods only.
+// This blocks digits, @ symbols, and anything containing "gmail"/"yahoo"/etc.
+const locationSchema = z
+  .string()
+  .trim()
+  .min(2, "Location is required")
+  .max(100, "Location is too long")
+  .regex(
+    /^[a-zA-Z0-9\s,.'-]+$/,
+    "Location can only contain letters, numbers, spaces, commas, and hyphens",
+  )
+  .refine(
+    (val) => !/gmail|yahoo|hotmail|outlook|icloud|@/i.test(val),
+    "Please enter a valid location",
+  );
+
 export const registerSchema = z
   .object({
     firstName: z.string().trim().min(1, "First name is required"),
@@ -28,7 +44,7 @@ export const registerSchema = z
       .int("Enter a valid year")
       .min(1970, "Year must be 1970 or later")
       .max(currentYear + 1, "Year cannot be in the future"),
-    location: z.string().trim().min(1, "Location is required"),
+    location: locationSchema,
     password: passwordSchema,
     confirmPassword: z.string(),
   })
