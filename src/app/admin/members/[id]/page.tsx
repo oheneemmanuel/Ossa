@@ -45,7 +45,7 @@ export default function MemberProfilePage() {
   if (loading) {
     return (
       <div className="flex justify-center py-20">
-        <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+        <Loader2 className="h-6 w-6 animate-spin text-black" />
       </div>
     );
   }
@@ -78,7 +78,7 @@ export default function MemberProfilePage() {
               className="h-16 w-16 rounded-full object-cover cursor-pointer hover:opacity-80 transition-opacity"
             />
           ) : (
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 text-black">
               <UserIcon className="h-7 w-7" />
             </div>
           )}
@@ -98,29 +98,29 @@ export default function MemberProfilePage() {
           </div>
         </div>
 
-        <dl className="grid grid-cols-2 gap-x-4 gap-y-4 text-sm">
+        <dl className="grid grid-cols-1 gap-x-4 gap-y-4 text-sm">
           <div>
-            <dt className="text-slate-400">Email</dt>
+            <dt className="text-black">Email</dt>
             <dd className="text-black">{member.email}</dd>
           </div>
           <div>
-            <dt className="text-slate-400">Phone</dt>
+            <dt className="text-black">Phone</dt>
             <dd className="text-black">{member.phone}</dd>
           </div>
           <div>
-            <dt className="text-slate-400">Gender</dt>
+            <dt className="text-black">Gender</dt>
             <dd className="text-black">{member.gender}</dd>
           </div>
           <div>
-            <dt className="text-slate-400">Location</dt>
+            <dt className="text-black">Location</dt>
             <dd className="text-black">{member.location}</dd>
           </div>
           <div>
-            <dt className="text-slate-400">Year Completed</dt>
+            <dt className="text-black">Year Completed</dt>
             <dd className="text-black">{member.yearCompleted}</dd>
           </div>
           <div>
-            <dt className="text-slate-400">Joined</dt>
+            <dt className="text-black">Joined</dt>
             <dd className="text-black">
               {new Date(member.createdAt).toLocaleDateString()}
             </dd>
