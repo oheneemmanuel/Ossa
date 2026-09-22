@@ -22,6 +22,7 @@ export default async function SettingsPage() {
       lastName: true,
       email: true,
       phone: true,
+      location: true,
       profileImageUrl: true, // added
     },
   });
