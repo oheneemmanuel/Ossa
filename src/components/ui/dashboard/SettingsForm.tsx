@@ -3,7 +3,15 @@
 
 import { useState } from "react";
 import { updateUserSettings } from "@/lib/actions/user";
-import { User, Mail, Phone, Save, CheckCircle2, AlertCircle } from "lucide-react";
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Save,
+  CheckCircle2,
+  AlertCircle,
+} from "lucide-react";
 
 interface UserData {
   id: string;
@@ -11,6 +19,7 @@ interface UserData {
   lastName: string | null;
   email: string;
   phone?: string | null;
+  location?: string | null;
 }
 
 interface SettingsFormProps {
@@ -22,6 +31,7 @@ export default function SettingsForm({ user }: SettingsFormProps) {
     firstName: user.firstName || "",
     lastName: user.lastName || "",
     phone: user.phone || "",
+    location: user.location || "", // Initialize location with user's existing location or an empty string
   });
 
   const [loading, setLoading] = useState(false);
@@ -156,6 +166,21 @@ export default function SettingsForm({ user }: SettingsFormProps) {
                 name="phone"
                 placeholder="e.g. 024XXXXXXX"
                 value={formData.phone}
+                onChange={handleChange}
+                className="w-full rounded-xl border border-gray-300 bg-white pl-9 pr-4 py-2 text-sm text-gray-900 focus:border-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900 transition-all"
+              />
+            </div>
+
+            <div className="relative mt-4">
+              <label className="block text-xs font-medium text-gray-700">
+                Location
+              </label>
+              <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                name="location"
+                placeholder="e.g. Accra, Ghana"
+                value={formData.location}
                 onChange={handleChange}
                 className="w-full rounded-xl border border-gray-300 bg-white pl-9 pr-4 py-2 text-sm text-gray-900 focus:border-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900 transition-all"
               />
