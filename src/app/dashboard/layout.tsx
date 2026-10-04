@@ -3,14 +3,16 @@ import { auth } from "@/auth.config";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/prisma";
 import Sidebar from "@/components/ui/dashboard/Sidebar";
+import { isWheelEnabled } from "@/lib/actions/settings";
 
 export default async function DashboardLayout({
+  
   children,
 }: {
   children: ReactNode;
 }) {
   const session = await auth();
-
+  const wheelEnabled = await isWheelEnabled();
   if (!session?.user?.email) {
     redirect("/login");
   }
@@ -32,7 +34,7 @@ export default async function DashboardLayout({
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-slate-50">
       {/* 1. Left Side Navigation */}
-      <Sidebar user={user} />
+      <Sidebar user={user} wheelEnabled={wheelEnabled} />
 
       {/* 2. Main Right Container */}
       <div className="flex flex-1 flex-col overflow-hidden">

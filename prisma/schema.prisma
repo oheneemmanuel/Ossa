@@ -35,6 +35,7 @@ model User {
   resetTokens PasswordResetToken[]
   failedLoginAttempts Int @default(0)
   lockedUntil DateTime?
+  spins Spin[]
 }
 
 model Contribution {
@@ -69,4 +70,46 @@ model Project {
   isActive Boolean @default(true)
   createdAt DateTime @default(now())
   contributions Contribution[]
+}
+
+
+enum SpinStatus {
+  PENDING
+  FULFILLED
+  FAILED
+}
+
+model Prize {
+  id        String   @id @default(cuid())
+  label     String
+  dataMb    Int
+  weight    Int
+  stock     Int?
+  color     String
+  sortOrder Int      @default(0)
+  active    Boolean  @default(true)
+  spins     Spin[]
+
+  @@index([active, sortOrder])
+}
+
+model Spin {
+  id        String     @id @default(cuid())
+  userId    String
+  prizeId   String
+  dayKey    String
+  code String? @unique
+  status    SpinStatus @default(PENDING)
+  createdAt DateTime   @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prize Prize @relation(fields: [prizeId], references: [id])
+
+  @@unique([userId, dayKey])
+  @@index([status])
+}
+
+model Setting {
+  key   String @id
+  value String
 }

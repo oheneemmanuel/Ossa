@@ -18,7 +18,8 @@ import {
   Users,
   KeyRound,
   Wallet,
-  Package
+  Package,
+  Gift
 } from "lucide-react";
 
 const links = [
@@ -26,13 +27,15 @@ const links = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Finance", href: "/dashboard/finance", icon: PiggyBank },
   { name: "Settings", href: "/dashboard/settings", icon: Settings },
- 
+
+
 ];
 const adminLinks = [
   { name: "Reset Requests", href: "/admin/reset-requests", icon: KeyRound },
   { name: "Members", href: "/admin/members", icon: Users },
   { name: "Finance (Admin)", href: "/admin/finance", icon: Wallet },
   {name: "Project Management", href:"/admin/projects", icon:Package },
+  {name: "Spin the Wheel", href:"/admin/wheel", icon:Gift }
 ];
 
 const accountLinks = [
@@ -46,8 +49,11 @@ type SidebarUser = {
   profileImageUrl: string | null;
 };
 
-export default function Sidebar({ user }: { user: SidebarUser }) {
+export default function Sidebar({ user, wheelEnabled }: { user: SidebarUser; wheelEnabled: boolean }) {
   const pathname = usePathname();
+  const memberLinks = [...links, ...(wheelEnabled ? [{ name: "Spin the Wheel", href: "/dashboard/wheel", icon: Gift }] : [])];
+   
+      
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -141,7 +147,7 @@ export default function Sidebar({ user }: { user: SidebarUser }) {
 
         <div className="flex flex-1 flex-col justify-between px-3 py-4">
           <nav className="flex flex-col gap-1">
-            {links.map((link) => {
+            {memberLinks.map((link) => {
               const isActive = mounted && pathname === link.href;
 
               return (

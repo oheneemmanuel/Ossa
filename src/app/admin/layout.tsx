@@ -3,6 +3,7 @@ import { auth } from "@/auth.config";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/prisma";
 import Sidebar from "@/components/ui/dashboard/Sidebar";
+import { isWheelEnabled } from "@/lib/actions/settings";
 
 export default async function AdminLayout({
   children,
@@ -29,15 +30,17 @@ export default async function AdminLayout({
     redirect("/login");
   }
 
-  // Since this is the admin layout, you probably also want a role check:
+  // Since this is the admin layout, only admins get in
   if (user.role !== "ADMIN") {
     redirect("/dashboard");
   }
 
+  const wheelEnabled = await isWheelEnabled();
+
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-slate-50">
       {/* 1. Left Side Navigation */}
-      <Sidebar user={user} />
+      <Sidebar user={user} wheelEnabled={wheelEnabled} />
 
       {/* 2. Main Right Container */}
       <div className="flex flex-1 flex-col overflow-hidden">
