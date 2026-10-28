@@ -14,10 +14,7 @@ export async function createUserAccount(formData: FormData) {
       firstName: formData.get("firstName")?.toString() ?? "",
       lastName: formData.get("lastName")?.toString() ?? "",
       email: formData.get("email")?.toString() ?? "",
-      phone: formData.get("phone")?.toString() ?? "",
-      gender: formData.get("gender")?.toString() ?? "",
       yearCompleted: formData.get("yearCompleted")?.toString() ?? "",
-      location: formData.get("location")?.toString() ?? "",
       password: formData.get("password")?.toString() ?? "",
       confirmPassword: formData.get("confirmPassword")?.toString() ?? "",
     };
@@ -33,7 +30,7 @@ export async function createUserAccount(formData: FormData) {
       };
     }
 
-    const { firstName, lastName, email, phone, gender, yearCompleted, location, password } =
+    const { firstName, lastName, email, yearCompleted, password } =
       parsed.data;
 
     // -----------------------------
@@ -51,10 +48,7 @@ export async function createUserAccount(formData: FormData) {
         firstName,
         lastName,
         email,
-        phone,
-        gender,
         yearCompleted,
-        location,
         password: hashedPassword,
       },
       select: {
@@ -62,10 +56,8 @@ export async function createUserAccount(formData: FormData) {
         firstName: true,
         lastName: true,
         email: true,
-        phone: true,
-        gender: true,
+        
         yearCompleted: true,
-        location: true,
         createdAt: true,
       },
     });

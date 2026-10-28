@@ -15,7 +15,7 @@ export async function PATCH(
   }
 
   const body = await req.json();
-  const { firstName, lastName, email, phone, gender, yearCompleted, location, role } = body;
+  const { firstName, lastName, email, yearCompleted, role } = body;
 
   if (id === session.user.id && role && role !== "ADMIN") {
     return NextResponse.json(
@@ -31,10 +31,7 @@ export async function PATCH(
         ...(firstName && { firstName }),
         ...(lastName && { lastName }),
         ...(email && { email: email.trim().toLowerCase() }),
-        ...(phone && { phone }),
-        ...(gender && { gender }),
         ...(yearCompleted && { yearCompleted: Number(yearCompleted) }),
-        ...(location && { location }),
         ...(role && { role }),
       },
       select: {
@@ -42,10 +39,7 @@ export async function PATCH(
         firstName: true,
         lastName: true,
         email: true,
-        phone: true,
-        gender: true,
         yearCompleted: true,
-        location: true,
         role: true,
         createdAt: true,
       },
@@ -102,10 +96,7 @@ export async function GET(
         firstName: true,
         lastName: true,
         email: true,
-        phone: true,
-        gender: true,
         yearCompleted: true,
-        location: true,
         role: true,
         createdAt: true,
         profileImageUrl: true,

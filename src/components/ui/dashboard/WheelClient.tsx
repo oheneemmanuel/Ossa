@@ -128,19 +128,19 @@ export default function WheelClient({
       <div className="min-h-24 text-center" aria-live="polite">
         {won ? (
           wonDataMb === 0 ? (
-            <p className="text-xl font-semibold">
+            <p className="text-xl font-semibold text-black">
               No data this time
-              <span className="mt-1 block text-sm font-normal text-slate-300">
+              <span className="mt-1 block text-sm font-normal text-black">
                 Come back tomorrow for another spin.
               </span>
             </p>
           ) : (
             <div>
-              <p className="text-xl font-semibold">
+              <p className="text-xl font-semibold text-black">
                 You won <span className="text-amber-300">{won}</span>
               </p>
               {wonCode && (
-                <p className="mt-2 text-sm text-slate-300">
+                <p className="mt-2 text-sm text-black-300">
                   Your win code:{" "}
                   <span className="font-mono font-semibold text-white">
                     {wonCode}

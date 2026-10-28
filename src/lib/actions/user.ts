@@ -10,7 +10,7 @@ import { revalidatePath } from "next/cache";
 export async function updateUserSettings(formData: {
   firstName: string;
   lastName: string;
-  phone: string;
+  
 }) {
   const session = await auth();
 
@@ -27,7 +27,7 @@ export async function updateUserSettings(formData: {
     data: {
       firstName: formData.firstName,
       lastName: formData.lastName,
-      phone: formData.phone,
+    
     },
   });
 

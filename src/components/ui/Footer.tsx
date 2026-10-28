@@ -120,12 +120,7 @@ export default function Footer() {
             rights reserved.
           </p>
           <div className="flex flex-wrap items-center sm:gap-2">
-            <Link href="/privacy" className={`${linkClass} pr-4`}>
-              Privacy
-            </Link>
-            <Link href="/terms" className={`${linkClass} pr-4`}>
-              Terms
-            </Link>
+            
             <a href="#top" className={`${linkClass} gap-2`}>
               Back to top
               <ArrowUp className="h-4 w-4" aria-hidden="true" />

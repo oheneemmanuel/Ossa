@@ -9,10 +9,7 @@ type Member = {
   firstName: string;
   lastName: string;
   email: string;
-  phone: string;
-  gender: string;
   yearCompleted: number;
-  location: string;
   role: "MEMBER" | "ADMIN";
   createdAt: string;
   profileImageUrl: string | null;
@@ -152,8 +149,6 @@ export default function MembersTable() {
             <tr className="border-b border-slate-100 bg-slate-50/50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
               <th className="px-4 py-3">Name</th>
               <th className="px-4 py-3">Email</th>
-              <th className="px-4 py-3">Phone</th>
-              <th className="px-4 py-3">Location</th>
               <th className="px-4 py-3">Role</th>
               <th className="px-4 py-3 text-right">Actions</th>
             </tr>
@@ -223,30 +218,8 @@ export default function MembersTable() {
                             className="w-full rounded-lg border border-slate-200 px-2 py-1 text-sm text-black focus:border-blue-600 focus:outline-none"
                           />
                         </td>
-                        <td className="px-4 py-2.5">
-                          <input
-                            value={editForm.phone ?? ""}
-                            onChange={(e) =>
-                              setEditForm((f) => ({
-                                ...f,
-                                phone: e.target.value,
-                              }))
-                            }
-                            className="w-full rounded-lg border border-slate-200 px-2 py-1 text-sm text-black focus:border-blue-600 focus:outline-none"
-                          />
-                        </td>
-                        <td className="px-4 py-2.5">
-                          <input
-                            value={editForm.location ?? ""}
-                            onChange={(e) =>
-                              setEditForm((f) => ({
-                                ...f,
-                                location: e.target.value,
-                              }))
-                            }
-                            className="w-full rounded-lg border border-slate-200 px-2 py-1 text-sm text-black focus:border-blue-600 focus:outline-none"
-                          />
-                        </td>
+                        
+                      
                         <td className="px-4 py-2.5">
                           <select
                             value={editForm.role ?? "MEMBER"}
@@ -297,12 +270,7 @@ export default function MembersTable() {
                         <td className="px-4 py-3 text-slate-600">
                           {member.email}
                         </td>
-                        <td className="px-4 py-3 text-slate-600">
-                          {member.phone}
-                        </td>
-                        <td className="px-4 py-3 text-slate-600">
-                          {member.location}
-                        </td>
+                        
                         <td className="px-4 py-3">
                           <span
                             className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${

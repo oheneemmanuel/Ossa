@@ -11,9 +11,7 @@ import {
   User,
   Mail,
   Lock,
-  MapPin,
   Calendar,
-  Phone,
   Eye,
   EyeOff,
   ArrowRight,
@@ -35,10 +33,7 @@ export default function RegisterForm() {
     firstName: "",
     lastName: "",
     email: "",
-    phone: "",
-    gender: "male",
     yearCompleted: "",
-    location: "",
     password: "",
     confirmPassword: "",
   });
@@ -91,10 +86,7 @@ export default function RegisterForm() {
         firstName: "",
         lastName: "",
         email: "",
-        phone: "",
-        gender: "male",
         yearCompleted: "",
-        location: "",
         password: "",
         confirmPassword: "",
       });
@@ -216,52 +208,12 @@ export default function RegisterForm() {
             </div>
           </div>
 
-          <div>
-            <label
-              htmlFor="phone"
-              className="block text-xs font-semibold text-slate-700 mb-1.5"
-            >
-              Phone Number *
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                <Phone className="h-4 w-4" />
-              </div>
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                required
-                placeholder="+233 24 000 0000"
-                value={formData.phone}
-                onChange={handleChange}
-                className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 py-2.5 text-sm text-black placeholder-slate-400 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10"
-              />
-            </div>
-          </div>
+          
         </div>
 
-        {/* GENDER & YEAR COMPLETED */}
+        
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div>
-            <label
-              htmlFor="gender"
-              className="block text-xs font-semibold text-slate-700 mb-1.5"
-            >
-              Gender *
-            </label>
-            <select
-              id="gender"
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-              className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-sm text-black transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10"
-            >
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </div>
-
+          
           <div>
             <label
               htmlFor="yearCompleted"
@@ -289,30 +241,7 @@ export default function RegisterForm() {
           </div>
         </div>
 
-        {/* LOCATION */}
-        <div>
-          <label
-            htmlFor="location"
-            className="block text-xs font-semibold text-slate-700 mb-1.5"
-          >
-            Location / City *
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-              <MapPin className="h-4 w-4" />
-            </div>
-            <input
-              id="location"
-              name="location"
-              type="text"
-              required
-              placeholder="Accra, Ghana"
-              value={formData.location}
-              onChange={handleChange}
-              className="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 py-2.5 text-sm text-black placeholder-slate-400 transition-all focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-600/10"
-            />
-          </div>
-        </div>
+      
 
         {/* PASSWORD & CONFIRM PASSWORD */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

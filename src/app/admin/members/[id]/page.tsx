@@ -8,10 +8,7 @@ type Member = {
   firstName: string;
   lastName: string;
   email: string;
-  phone: string;
-  gender: string;
   yearCompleted: number;
-  location: string;
   role: "MEMBER" | "ADMIN";
   createdAt: string;
   profileImageUrl: string | null;
@@ -103,18 +100,9 @@ export default function MemberProfilePage() {
             <dt className="text-black">Email</dt>
             <dd className="text-black">{member.email}</dd>
           </div>
-          <div>
-            <dt className="text-black">Phone</dt>
-            <dd className="text-black">{member.phone}</dd>
-          </div>
-          <div>
-            <dt className="text-black">Gender</dt>
-            <dd className="text-black">{member.gender}</dd>
-          </div>
-          <div>
-            <dt className="text-black">Location</dt>
-            <dd className="text-black">{member.location}</dd>
-          </div>
+         
+         
+         
           <div>
             <dt className="text-black">Year Completed</dt>
             <dd className="text-black">{member.yearCompleted}</dd>

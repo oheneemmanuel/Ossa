@@ -22,10 +22,10 @@ model User {
   firstName     String
   lastName      String
   email         String   @unique
-  phone         String
-  gender        String
+  
+
   yearCompleted Int
-  location      String
+
   password      String
   role Role @default(MEMBER)
   profileImageUrl String?
