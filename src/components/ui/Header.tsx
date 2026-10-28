@@ -11,7 +11,7 @@ export default function Header() {
       name: "Education Hub",
       href: "#education-hub",
       subLinks: [
-        { name: "Our Projects", href: "/events" },
+        { name: "Our Projects", href: "/projects" },
         { name: "Events & Fairs", href: "/events" },
       ],
     },
@@ -27,12 +27,15 @@ export default function Header() {
       ],
     },
     {
-      name: 'Contact',
-      href :"/contact"
-    }
+      name: "Contact",
+      href: "/contact",
+    },
   ];
 
-  const mobileNavLinks = [...desktopNavLinks, { name: "Sign In", href: "/login" }];
+  const mobileNavLinks = [
+    ...desktopNavLinks,
+    { name: "Sign In", href: "/login" },
+  ];
 
   return (
     <header className="sticky top-0 z-50 border-b-2 border-slate-950 bg-white/95 backdrop-blur">
@@ -40,22 +43,15 @@ export default function Header() {
         <div className="flex items-center justify-between w-full md:w-auto">
           <Link href="/" className="flex items-center gap-3">
             <div className="bg-white p-2.5">
-              <Image
-                src="/li.jpg"
-                alt="OSSA Logo"
-                width={50}
-                height={50}
-                priority
-                
-              />
+              <Image src="/li.jpg" alt="" width={50} height={50} priority />
             </div>
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-black">
+              <span className="block text-xl font-bold uppercase tracking-tight text-black sm:text-2xl">
                 OSSA
-              </h1>
-              <p className="hidden text-xs font-bold text-slate-500 sm:block tracking-wide text-blue-600">
+              </span>
+              <span className="hidden text-xs font-bold tracking-wide text-blue-700 sm:block">
                 OLD SCIENCE STUDENT ASSOCIATION
-              </p>
+              </span>
             </div>
           </Link>
 
@@ -70,7 +66,7 @@ export default function Header() {
         <div className="hidden md:flex justify-end items-center gap-4 col-span-1">
           <Link
             href="/login"
-            className="rounded-lg border-2 border-slate-950 bg-gray-500 px-4 py-2 text-sm font-bold text-white transition hover:scale-105 hover:bg-blue-600"
+            className="rounded-lg border border-blue-400 bg-slate-900 px-4 py-2 text-sm font-bold text-white transition hover:scale-105 hover:bg-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
           >
             Sign In
           </Link>

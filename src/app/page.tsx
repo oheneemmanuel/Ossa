@@ -42,84 +42,57 @@ export default function Home() {
   return (
     <main className="flex flex-col bg-[#f7f5ef] text-slate-900 min-h-screen">
       {/* HERO SECTION */}
-      <section className="border-b-2 border-slate-950 bg-[#0b4f6c] text-white relative overflow-hidden">
-        <div className="mx-auto max-w-7xl px-6 py-20 grid gap-8 md:grid-cols-2 items-center">
-          <Image
-            src="/science.jpg"
-            alt="OSSA Hero Banner"
-            width={900}
-            height={700}
-            priority
-            className="absolute inset-0 h-full w-full object-cover opacity-10 md:opacity-20"
-          />
-          <Reveal>
-            <p className="mb-3 text-lg font-black uppercase tracking-[0.35em] text-white">
+      {/* HERO SECTION */}
+      <section className="relative overflow-hidden border-b-2 border-slate-950 bg-[#0b4f6c] text-white">
+        <Image
+          src="/science.jpg"
+          alt="OSSA Hero Banner"
+          width={900}
+          height={700}
+          priority
+          className="absolute inset-0 h-full w-full object-cover opacity-60"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0b4f6c] via-[#0b4f6c]/85 to-[#0b4f6c]/30" />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-6 py-24">
+          <Reveal className="max-w-3xl">
+            <p className="mb-3 text-sm font-black uppercase tracking-[0.35em] text-white">
               Old Science Student Association
             </p>
 
-            <h1 className="mb-6 text-4xl font-black uppercase leading-none tracking-tight sm:text-5xl md:text-6xl text-white">
+            <h1 className="mb-6 text-4xl font-black uppercase leading-none tracking-tight text-white sm:text-5xl md:text-6xl">
               Advancing science <br />
               <span className="text-[#FF6B35]">education & service.</span>
             </h1>
 
-            <p className="mb-8 max-w-2xl text-base sm:text-lg text-white/85 font-medium leading-relaxed">
+            <p className="mb-8 max-w-2xl text-base font-medium leading-relaxed text-white/90 sm:text-lg">
               OSSA reunites old science students to empower new generations. We
               build school laboratories, fund STEM resources, and maintain a
               lifelong network of scientific excellence.
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col items-start gap-4">
               <Link
-                href="#about"
-                className="bg-blue-600 text-white px-6 py-3 border-2 border-slate-950 rounded-xl font-bold tracking-wide shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all text-center"
+                href="/register"
+                className="rounded-xl border-2 border-slate-950 bg-[#FF6B35] px-8 py-4 text-center text-lg font-black tracking-wide text-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
-                Our Mission
+                Register Membership
               </Link>
 
               <Link
                 href="/dashboard"
-                className="bg-white text-slate-950 px-6 py-3 border-2 border-slate-950 rounded-xl font-bold tracking-wide shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all text-center"
+                className="text-sm font-semibold text-white underline underline-offset-4 transition hover:text-white/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
-                Go to Dashboard
+                Already a member? Sign in
               </Link>
             </div>
-          </Reveal>
-
-          {/* Right Banner Card */}
-          <Reveal
-            delay={120}
-            className="rounded-2xl border-2 border-slate-950 bg-white p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] text-slate-950"
-          >
-            <div className="flex items-center gap-2 mb-4">
-              <Atom className="w-5 h-5 text-emerald-600 animate-[spin_8s_linear_infinite]" />
-              <p className="text-xs font-black uppercase tracking-[0.25em] text-slate-500">
-                Current Objectives
-              </p>
-            </div>
-            <h2 className="text-xl font-black uppercase tracking-tight text-slate-950">
-              Supporting Audio Visual.
-            </h2>
-            <ul className="mt-4 space-y-3 text-sm font-bold text-slate-700">
-              <li className="flex items-center gap-2">
-                <FlaskConical className="w-4 h-4 text-blue-500 flex-shrink-0" />
-                <span>Donated lab material kits</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                <span>High school mentorship tracks</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-amber-500 flex-shrink-0" />
-                <span>Annual OSSA STEM Exhibition</span>
-              </li>
-            </ul>
           </Reveal>
         </div>
       </section>
 
       {/* QUICK STATISTICS BAR */}
-      <section className="border-b-2 border-slate-950 bg-gray-400 py-6 text-slate-950">
-        <div className="mx-auto max-w-5xl px-4 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+      <section className="border-b-2 border-slate-950 bg-gray-400 py-12 text-slate-950">
+        <div className="mx-auto max-w-5xl px-4 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-4">
           {stats.map((stat) => (
             <div
               key={stat.label}
@@ -128,7 +101,7 @@ export default function Home() {
               <div className="text-xl sm:text-2xl font-black uppercase tracking-tight text-slate-950">
                 {stat.value}
               </div>
-              <div className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-slate-600">
+              <div className="text-xs font-black uppercase tracking-wider text-slate-600">
                 {stat.label}
               </div>
             </div>
@@ -251,6 +224,37 @@ export default function Home() {
         </div>
       </section>
 
+      {/* CURRENT OBJECTIVES */}
+      <section className="bg-[#f7f5ef] py-20">
+        <div className="mx-auto max-w-3xl px-6">
+          <Reveal className="rounded-2xl border-2 border-slate-950 bg-white p-6 text-slate-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] sm:p-8">
+            <div className="mb-4 flex items-center gap-2">
+              <Atom className="h-5 w-5 animate-[spin_8s_linear_infinite] text-emerald-600" />
+              <p className="text-xs font-black uppercase tracking-[0.25em] text-slate-500">
+                Current Objectives
+              </p>
+            </div>
+            <h2 className="text-xl font-black uppercase tracking-tight text-slate-950">
+              Where Your Support Goes
+            </h2>
+            <ul className="mt-4 space-y-3 text-sm font-bold text-slate-700">
+              <li className="flex items-center gap-2">
+                <FlaskConical className="h-4 w-4 flex-shrink-0 text-blue-500" />
+                <span>Donated lab material kits</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <BookOpen className="h-4 w-4 flex-shrink-0 text-emerald-500" />
+                <span>High school mentorship tracks</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Calendar className="h-4 w-4 flex-shrink-0 text-amber-500" />
+                <span>Annual OSSA STEM Exhibition</span>
+              </li>
+            </ul>
+          </Reveal>
+        </div>
+      </section>
+
       {/* CTA CALL OUT */}
       <section
         id="join"
@@ -259,14 +263,15 @@ export default function Home() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_45%)]" />
         <Reveal className="relative z-10 mx-auto max-w-4xl px-6 text-center">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.5em] text-blue-300">
-            Join the movement
+            Join the Community
           </p>
           <h2 className="mb-6 text-4xl font-black uppercase tracking-tight sm:text-5xl">
             Ready to empower future scientists?
           </h2>
           <p className="mx-auto mb-10 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">
-            Whether you graduated years ago or recently entered a scientific field,
-            your insight and contribution can reshape educational outcomes.
+            Whether you graduated years ago or recently entered a scientific
+            field, your insight and contribution can reshape educational
+            outcomes.
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-5">

@@ -8,11 +8,13 @@ import {
   Menu,
   X,
   Home,
-  LayoutDashboard,
   Info,
   Compass,
-  Users,
+  BookOpen,
+  Phone,
+  LogIn,
   ChevronDown,
+  type LucideIcon,
 } from "lucide-react";
 
 interface NavLink {
@@ -20,6 +22,14 @@ interface NavLink {
   href: string;
   subLinks?: { name: string; href: string }[];
 }
+
+const iconByName: Record<string, LucideIcon> = {
+  Home,
+  "Education Hub": BookOpen,
+  About: Info,
+  Contact: Phone,
+  "Sign In": LogIn,
+};
 
 export default function MobileMenu({ navLinks }: { navLinks: NavLink[] }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,54 +41,33 @@ export default function MobileMenu({ navLinks }: { navLinks: NavLink[] }) {
     setMounted(true);
   }, []);
 
+  // Escape to close + lock page scroll while the drawer is open
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
+
   const toggleGroup = (name: string) => {
     setExpandedGroup((current) => (current === name ? null : name));
   };
 
-  const getIcon = (href: string) => {
-    const activeColor = "text-slate-950";
-    const inactiveColor = "text-slate-600";
+  const closeAll = () => {
+    setIsOpen(false);
+    setExpandedGroup(null);
+  };
 
-    switch (href) {
-      case "/":
-        return (
-          <Home
-            size={19}
-            className={pathname === "/" ? activeColor : inactiveColor}
-          />
-        );
-      case "/dashboard":
-        return (
-          <LayoutDashboard
-            size={19}
-            className={pathname === "/" ? inactiveColor : activeColor}
-          />
-        );
-      case "#about":
-        return (
-          <Info
-            size={19}
-            className={pathname === "/" ? inactiveColor : activeColor}
-          />
-        );
-      case "#events":
-        return (
-          <Compass
-            size={19}
-            className={pathname === "/" ? inactiveColor : activeColor}
-          />
-        );
-      case "#join":
-        return (
-          <Users
-            size={19}
-            className={pathname === "/" ? inactiveColor : activeColor}
-          />
-        );
-      
-      default:
-        return <Home size={19} className={inactiveColor} />;
-    }
+  const renderIcon = (name: string, colorClass: string) => {
+    const Icon = iconByName[name] ?? Compass;
+    return <Icon size={19} className={colorClass} aria-hidden="true" />;
   };
 
   return (
@@ -89,11 +78,12 @@ export default function MobileMenu({ navLinks }: { navLinks: NavLink[] }) {
         type="button"
         className="md:hidden rounded-lg border-2 border-slate-950 bg-white p-1.5 text-slate-950 transition hover:bg-blue-500"
         aria-label="Open navigation menu"
+        aria-expanded={isOpen}
+        aria-controls="mobile-menu"
       >
         <Menu className="h-7 w-7" />
       </button>
 
-      {/* Portal for Backdrop and Drawer */}
       {mounted &&
         createPortal(
           <>
@@ -105,20 +95,23 @@ export default function MobileMenu({ navLinks }: { navLinks: NavLink[] }) {
               />
             )}
 
-            {/* Drawer Container */}
+            {/* Drawer: `invisible` when closed removes it from tab order and screen readers */}
             <div
-              className={`fixed inset-y-0 right-0 z-[70] flex w-[78vw] max-w-[290px] flex-col border-l-2 border-slate-950 bg-[#f7f5ef] transition-transform duration-300 ease-in-out md:hidden ${
-                isOpen ? "translate-x-0" : "translate-x-full"
+              id="mobile-menu"
+              className={`fixed inset-y-0 right-0 z-[70] flex w-[78vw] max-w-[290px] flex-col border-l-2 border-slate-950 bg-[#f7f5ef] transition-[transform,visibility] duration-300 ease-in-out md:hidden ${
+                isOpen ? "visible translate-x-0" : "invisible translate-x-full"
               }`}
             >
               {/* Drawer Header */}
-              <div className="flex items-center justify-between border-b-2 border-slate-950 bg-[#0b4f6c] px-5 py-4 text-white">
+              <div className="flex items-center justify-between border-b-2 border-slate-950 bg-[#0b4f6c] py-2 pl-5 pr-3 text-white">
                 <span className="text-xs font-extrabold uppercase tracking-[0.3em]">
                   OSSA Menu
                 </span>
                 <button
+                  type="button"
                   onClick={() => setIsOpen(false)}
-                  className="rounded-lg border-2 border-transparent p-1 text-white transition hover:border-white hover:bg-white/10"
+                  aria-label="Close navigation menu"
+                  className="flex h-11 w-11 items-center justify-center rounded-lg border-2 border-transparent text-white transition hover:border-white hover:bg-white/10"
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -126,13 +119,14 @@ export default function MobileMenu({ navLinks }: { navLinks: NavLink[] }) {
 
               {/* Scrollable Links Area */}
               <div className="flex-1 overflow-y-auto py-2">
-                <nav className="flex flex-col gap-1 px-3">
+                <nav aria-label="Mobile" className="flex flex-col gap-1 px-3">
                   {navLinks.map((link) => {
                     const isActive = pathname === link.href;
                     const isGroupActive =
-                      link.subLinks?.some((subLink) => pathname === subLink.href) ?? false;
+                      link.subLinks?.some((s) => pathname === s.href) ?? false;
 
                     if (link.subLinks?.length) {
+                      const isExpanded = expandedGroup === link.name;
                       return (
                         <div
                           key={link.name}
@@ -142,39 +136,30 @@ export default function MobileMenu({ navLinks }: { navLinks: NavLink[] }) {
                               : "border-transparent bg-white/70"
                           }`}
                         >
-                          <div className="flex items-center justify-between px-4 py-3">
-                            <Link
-                              href={link.href}
-                              onClick={() => {
-                                setIsOpen(false);
-                                setExpandedGroup(null);
-                              }}
-                              className={`flex flex-1 items-center gap-3.5 text-sm font-bold transition ${
-                                isActive
+                          <button
+                            type="button"
+                            onClick={() => toggleGroup(link.name)}
+                            aria-expanded={isExpanded}
+                            className="flex min-h-[44px] w-full items-center justify-between px-4 py-3 text-left text-sm font-bold text-slate-700 transition hover:text-slate-950"
+                          >
+                            <span className="flex items-center gap-3.5">
+                              {renderIcon(
+                                link.name,
+                                isGroupActive
                                   ? "text-slate-950"
-                                  : "text-slate-700 hover:text-slate-950"
-                                  
-                              }`}
-                            >
-                              {getIcon(link.href)}
+                                  : "text-slate-600",
+                              )}
                               <span>{link.name}</span>
-                            </Link>
+                            </span>
+                            <ChevronDown
+                              aria-hidden="true"
+                              className={`h-5 w-5 transition-transform ${
+                                isExpanded ? "rotate-180" : ""
+                              }`}
+                            />
+                          </button>
 
-                            <button
-                              type="button"
-                              onClick={() => toggleGroup(link.name)}
-                              className="rounded-lg p-1 text-slate-700 transition hover:bg-slate-100 hover:text-slate-950"
-                              aria-label={`Toggle ${link.name}`}
-                            >
-                              <ChevronDown
-                                className={`h-4 w-4 transition-transform ${
-                                  expandedGroup === link.name ? "rotate-180" : ""
-                                }`}
-                              />
-                            </button>
-                          </div>
-
-                          {expandedGroup === link.name && (
+                          {isExpanded && (
                             <div className="border-t border-slate-200 bg-slate-50/80 px-2 pb-2 pt-2">
                               {link.subLinks.map((subLink) => {
                                 const isSubActive = pathname === subLink.href;
@@ -182,13 +167,10 @@ export default function MobileMenu({ navLinks }: { navLinks: NavLink[] }) {
                                   <Link
                                     key={subLink.name}
                                     href={subLink.href}
-                                    onClick={() => {
-                                      setIsOpen(false);
-                                      setExpandedGroup(null);
-                                    }}
-                                    className={`mt-1 flex items-center rounded-lg px-3 py-2 text-sm font-semibold transition ${
+                                    onClick={closeAll}
+                                    className={`mt-1 flex min-h-[44px] items-center rounded-lg px-3 py-2.5 text-sm font-semibold transition ${
                                       isSubActive
-                                        ? "bg-blue-500 text-white"
+                                        ? "bg-blue-700 text-white"
                                         : "text-slate-700 hover:bg-blue-400 hover:text-slate-950"
                                     }`}
                                   >
@@ -206,14 +188,17 @@ export default function MobileMenu({ navLinks }: { navLinks: NavLink[] }) {
                       <Link
                         key={link.name}
                         href={link.href}
-                        onClick={() => setIsOpen(false)}
-                        className={`flex items-center gap-3.5 rounded-lg border-2 px-4 py-3 text-sm font-bold transition ${
+                        onClick={closeAll}
+                        className={`flex min-h-[44px] items-center gap-3.5 rounded-lg border-2 px-4 py-3 text-sm font-bold transition ${
                           isActive
                             ? "border-slate-950 bg-blue-600 text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
                             : "border-transparent text-slate-700 hover:border-slate-950 hover:bg-white hover:text-slate-950"
                         }`}
                       >
-                        {getIcon(link.href)}
+                        {renderIcon(
+                          link.name,
+                          isActive ? "text-white" : "text-slate-600",
+                        )}
                         <span>{link.name}</span>
                       </Link>
                     );
